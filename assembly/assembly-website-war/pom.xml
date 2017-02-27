@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+     2012-2017 Codenvy, S.A.
+     All Rights Reserved.
+
+    NOTICE:  All information contained herein is, and remains
+    the property of Codenvy S.A. and its suppliers,
+    if any.  The intellectual and technical concepts contained
+    herein are proprietary to Codenvy S.A.
+    and its suppliers and may be covered by U.S. and Foreign Patents,
+    patents in process, and are protected by trade secret or copyright law.
+    Dissemination of this information or reproduction of this material
+    is strictly forbidden unless prior written permission is obtained
+    from Codenvy S.A..
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>redhat-assembly-parent</artifactId>
+        <groupId>com.codenvy.redhat</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>assembly-website-war</artifactId>
+    <packaging>pom</packaging>
+    <name>RedHat :: WAR     :: Site</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.codenvy.onpremises</groupId>
+            <artifactId>assembly-website-war</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>com.codenvy.onpremises</groupId>
+            <artifactId>site</artifactId>
+            <classifier>${site.classifier}</classifier>
+            <type>zip</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/unzip/onprem-source-war</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.codenvy.onpremises</groupId>
+                                    <artifactId>assembly-website-war</artifactId>
+                                    <type>war</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-site</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <stripVersion>true</stripVersion>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.codenvy.onpremises</groupId>
+                                    <artifactId>site</artifactId>
+                                    <classifier>${site.classifier}</classifier>
+                                    <type>zip</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unzip-site</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <unzip dest="${project.build.directory}/unzip/site"
+                                       src="${project.build.directory}/dependency/site-${site.classifier}.zip"/>
+                                <delete includeEmptyDirs="true">
+                                    <fileset dir="${project.build.directory}/unzip/site/site/">
+                                        <include name="**/war/"/>
+                                        <include name="**/email-templates/"/>
+                                    </fileset>
+                                </delete>
+                                <copy todir="${project.build.directory}/source-war">
+                                    <fileset dir="${project.build.directory}/unzip/site/site/"/>
+                                </copy>
+                                <copy todir="${project.build.directory}/source-war/WEB-INF">
+                                    <fileset dir="${project.build.directory}/unzip/onprem-source-war/WEB-INF"/>
+                                </copy>
+                                <copy overwrite="true" todir="${project.build.directory}/source-war">
+                                    <fileset dir="${project.basedir}/src/main/site"/>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <updateOnly>false</updateOnly>
+                    <descriptor>${project.basedir}/src/assembly/assembly.xml</descriptor>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
