@@ -107,9 +107,6 @@
                                 <copy todir="${project.build.directory}/source-war/WEB-INF">
                                     <fileset dir="${project.build.directory}/unzip/onprem-source-war/WEB-INF"/>
                                 </copy>
-                                <copy overwrite="true" todir="${project.build.directory}/source-war">
-                                    <fileset dir="${project.basedir}/src/main/site"/>
-                                </copy>
                             </tasks>
                         </configuration>
                     </execution>

@@ -19,3 +19,13 @@
 /**
  * It is designed to override dashboard styles.
  */
+
+/* hide wish button */
+div#codenvyfooter.che-footer.layout-align-start-center.layout-row > a:nth-of-type(1)  {
+  display : none !important;
+}
+
+/* hide support button */
+div#codenvyfooter.che-footer.layout-align-start-center.layout-row > a:nth-of-type(3)  {
+  display : none !important;
+}
