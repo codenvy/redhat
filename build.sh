@@ -1,5 +1,9 @@
 #!/bin/bash
 
+###########################################################################################
+# Builds project in a docker container that contains all necessary environment.
+###########################################################################################
+
 # See: https://sipb.mit.edu/doc/safe-shell/
 set -e
 set -u
