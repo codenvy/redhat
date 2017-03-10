@@ -11,29 +11,56 @@
       Codenvy, S.A. - initial API and implementation
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>maven-depmgt-pom</artifactId>
         <groupId>org.eclipse.che.depmgt</groupId>
-        <version>5.4.0-SNAPSHOT</version>
+        <version>5.5.0-SNAPSHOT</version>
     </parent>
     <groupId>com.codenvy.redhat</groupId>
     <artifactId>redhat-parent</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>RedHat :: Parent pom</name>
+    <name>RedHat :: Parent</name>
+    <modules>
+        <module>ide</module>
+        <module>plugins</module>
+        <module>assembly</module>
+    </modules>
     <properties>
+        <che.version>5.5.0-SNAPSHOT</che.version>
+        <codenvy.version>5.5.0-SNAPSHOT</codenvy.version>
         <site.classifier>onprem-se</site.classifier>
-        <che.version>5.4.0</che.version>
-        <codenvy.version>5.4.0</codenvy.version>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.codenvy.onpremises</groupId>
+                <artifactId>assembly-ide-war</artifactId>
+                <version>${codenvy.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.onpremises</groupId>
+                <artifactId>site</artifactId>
+                <version>${che.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-dashboard-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
                 <groupId>com.codenvy.redhat</groupId>
                 <artifactId>assembly-ide-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-website-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
@@ -45,6 +72,12 @@
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-wsagent-server</artifactId>
+                <version>${che.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
                 <artifactId>assembly-wsagent-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
@@ -52,18 +85,6 @@
             <dependency>
                 <groupId>com.codenvy.redhat</groupId>
                 <artifactId>assembly-wsmaster-war</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.redhat</groupId>
-                <artifactId>assembly-dashboard-war</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.redhat</groupId>
-                <artifactId>assembly-website-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
@@ -84,32 +105,19 @@
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat</groupId>
-                <artifactId>assembly-wsagent-server</artifactId>
-                <version>${che.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.redhat</groupId>
                 <artifactId>compiling-ide-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
             <dependency>
-                <groupId>com.codenvy.redhat</groupId>
-                <artifactId>plugin-redhat-product-info</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.redhat</groupId>
+                <groupId>com.codenvy.redhat.plugin</groupId>
                 <artifactId>plugin-redhat-help</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.che</groupId>
-                <artifactId>che-parent</artifactId>
-                <version>${che.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.codenvy.redhat.plugin</groupId>
+                <artifactId>plugin-redhat-product-info</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codenvy.onpremises</groupId>
@@ -119,66 +127,12 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.codenvy.onpremises</groupId>
-                <artifactId>site</artifactId>
+                <groupId>org.eclipse.che</groupId>
+                <artifactId>che-parent</artifactId>
                 <version>${che.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.onpremises</groupId>
-                <artifactId>assembly-ide-war</artifactId>
-                <version>${codenvy.version}</version>
-                <type>war</type>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <repositories>
-        <repository>
-            <id>codenvy-public-repo</id>
-            <name>codenvy public</name>
-            <url>https://maven.codenvycorp.com/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>codenvy-public-snapshots-repo</id>
-            <name>codenvy public snapshots</name>
-            <url>https://maven.codenvycorp.com/content/repositories/codenvy-public-snapshots/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>codenvy-public-repo</id>
-            <name>codenvy public</name>
-            <url>https://maven.codenvycorp.com/content/groups/public/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>codenvy-public-snapshots-repo</id>
-            <name>codenvy public snapshots</name>
-            <url>https://maven.codenvycorp.com/content/repositories/codenvy-public-snapshots/</url>
-        </pluginRepository>
-    </pluginRepositories>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*.*</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.google.code.sortpom</groupId>
-                <artifactId>maven-sortpom-plugin</artifactId>
-                <version>${version.sortpom.plugin}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    <modules>
-        <module>ide</module>
-        <module>plugins</module>
-        <module>assembly</module>
-    </modules>
 </project>

@@ -11,17 +11,16 @@
       Codenvy, S.A. - initial API and implementation
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.codenvy.redhat</groupId>
         <artifactId>che-core-ide-parent</artifactId>
+        <groupId>com.codenvy.redhat</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
     <artifactId>che-core-ide-stacks</artifactId>
     <packaging>pom</packaging>
-    <name>RedHat :: IDE     :: STACKS</name>
+    <name>RedHat :: IDE      :: STACKS</name>
     <build>
         <plugins>
             <plugin>
@@ -57,7 +56,7 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <copy file="src/main/resources/stacks.json" overwrite="true" todir="${project.build.directory}/source-jar"/>
+                                <copy file="src/main/resources/stacks.json" overwrite="true" todir="${project.build.directory}/source-jar" />
                             </tasks>
                         </configuration>
                     </execution>

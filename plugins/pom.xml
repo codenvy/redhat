@@ -11,20 +11,20 @@
       Codenvy, S.A. - initial API and implementation
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.codenvy.redhat</groupId>
         <artifactId>redhat-parent</artifactId>
+        <groupId>com.codenvy.redhat</groupId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+    <groupId>com.codenvy.redhat.plugin</groupId>
     <artifactId>plugin-parent</artifactId>
     <packaging>pom</packaging>
-    <name>RedHat :: Plugins :: Parent</name>
+    <name>RedHat :: Plugins  :: Parent</name>
     <modules>
-        <module>plugin-redhat-product-info</module>
         <module>plugin-redhat-help</module>
+        <module>plugin-redhat-product-info</module>
     </modules>
 </project>
