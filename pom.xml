@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2012-2017 Codenvy, S.A.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+      Codenvy, S.A. - initial API and implementation
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>maven-depmgt-pom</artifactId>
+        <groupId>org.eclipse.che.depmgt</groupId>
+        <version>5.5.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.codenvy.redhat</groupId>
+    <artifactId>redhat-parent</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>RedHat :: Parent</name>
+    <modules>
+        <module>ide</module>
+        <module>plugins</module>
+        <module>assembly</module>
+    </modules>
+    <properties>
+        <che.version>5.5.0-SNAPSHOT</che.version>
+        <codenvy.version>5.5.0-SNAPSHOT</codenvy.version>
+        <site.classifier>onprem-se</site.classifier>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.codenvy.onpremises</groupId>
+                <artifactId>assembly-ide-war</artifactId>
+                <version>${codenvy.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.onpremises</groupId>
+                <artifactId>site</artifactId>
+                <version>${che.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-dashboard-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-ide-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-website-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-wsagent-server</artifactId>
+                <version>${project.version}</version>
+                <type>tar.gz</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-wsagent-server</artifactId>
+                <version>${che.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-wsagent-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>assembly-wsmaster-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>che-core-ide-parent</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>che-core-ide-stacks</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>che-core-ide-templates</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>compiling-ide-war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.plugin</groupId>
+                <artifactId>plugin-redhat-help</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.plugin</groupId>
+                <artifactId>plugin-redhat-product-info</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.onpremises</groupId>
+                <artifactId>onpremises-assembly-parent</artifactId>
+                <version>${codenvy.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.che</groupId>
+                <artifactId>che-parent</artifactId>
+                <version>${che.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
