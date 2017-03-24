@@ -1,17 +1,17 @@
 [
   {
-    "id": "blank-redhat-default",
+    "id": "redhat-default",
     "creator": "ide",
-    "name": "Blank",
-    "description": "Default Blank RedHat Stack.",
-    "scope": "advanced",
+    "name": "Red Hat JBoss EAP",
+    "description": "Red Hat JBoss EAP with full product name and version underneath, RHEL dev license (not CentOS)",
+    "scope": "general",
     "tags": [
       "redhat"
     ],
     "components": [],
     "source": {
       "type": "image",
-      "origin": "eclipse/ubuntu_jdk8"
+      "origin": "codenvy/jboss-eap7"
     },
     "workspaceConfig": {
       "environments": {
@@ -30,17 +30,17 @@
             }
           },
           "recipe": {
-            "location": "eclipse/ubuntu_jdk8",
+            "location": "codenvy/jboss-eap7",
             "type": "dockerimage"
           }
         }
       },
-      "name": "default",
+      "name": "redhat",
       "defaultEnv": "default",
       "description": null
     },
     "stackIcon": {
-      "name": "type-blank.svg",
+      "name": "type-java.svg",
       "mediaType": "image/svg+xml"
     }
   },

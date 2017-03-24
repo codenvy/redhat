@@ -16,7 +16,7 @@
     <parent>
         <artifactId>maven-depmgt-pom</artifactId>
         <groupId>org.eclipse.che.depmgt</groupId>
-        <version>5.5.0-SNAPSHOT</version>
+        <version>5.6.0-SNAPSHOT</version>
     </parent>
     <groupId>com.codenvy.redhat</groupId>
     <artifactId>redhat-parent</artifactId>
@@ -29,8 +29,8 @@
         <module>assembly</module>
     </modules>
     <properties>
-        <che.version>5.5.0-SNAPSHOT</che.version>
-        <codenvy.version>5.5.0-SNAPSHOT</codenvy.version>
+        <che.version>5.5.0</che.version>
+        <codenvy.version>5.5.0</codenvy.version>
         <site.classifier>onprem-se</site.classifier>
     </properties>
     <dependencyManagement>
