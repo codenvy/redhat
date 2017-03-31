@@ -69,6 +69,15 @@
           "goal": "Run",
           "previewUrl": "http://${server.port.8080}/jboss-as-kitchensink/"
         }
+      },
+      {
+        "name": "Start JBoss for debug",
+        "type": "custom",
+        "commandLine": "$JBOSS_HOME/bin/standalone.sh -Djboss.bind.address=0.0.0.0 -Djboss.bind.address.management=0.0.0.0 --debug 8000",
+        "attributes": {
+          "goal": "Debug",
+          "previewUrl": ""
+        }
       }
     ],
     "links": [],
