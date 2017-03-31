@@ -1,10 +1,10 @@
 [
   {
-    "name": "blank-redhat",
-    "displayName": "blank-redhat",
-    "path": "/blank-redhat",
-    "description": "A blank redhat project example.",
-    "projectType": "blank",
+    "name": "kitchen-sink",
+    "displayName": "Kitchen sink",
+    "path": "/kitchen-sink",
+    "description": "kitchen-sink",
+    "projectType": "maven",
     "mixins": [],
     "attributes": {
     },
@@ -12,10 +12,74 @@
     "problems": [],
     "source": {
       "type": "git",
-      "location": "https://github.com/che-samples/blank",
+      "location": "https://github.com/codenvy-templates/redhat-kitchensink-webapp.git",
       "parameters": {}
     },
-    "commands": [],
+    "commands": [
+      {
+        "name": "Build, deploy and start JBoss",
+        "type": "custom",
+        "commandLine": "cd ${current.project.path}/ && mvn clean install && cd target && warname=$(echo *.war | cut -f 1 -d '.') && rm $JBOSS_HOME/standalone/deployments/${warname}.war.deployed 2>/dev/null; cp ${warname}.war $JBOSS_HOME/standalone/deployments/ && $JBOSS_HOME/bin/standalone.sh -Djboss.bind.address=0.0.0.0 -Djboss.bind.address.management=0.0.0.0",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": "http://${server.port.8080}/jboss-as-kitchensink/"
+        }
+      },
+      {
+        "name": "Build and re-deploy",
+        "type": "custom",
+        "commandLine": "cd ${current.project.path}/ && mvn clean install && cd target && warname=$(echo *.war | cut -f 1 -d '.') && rm $JBOSS_HOME/standalone/deployments/${warname}.war.deployed 2>/dev/null; cp ${warname}.war $JBOSS_HOME/standalone/deployments/",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": "http://${server.port.8080}/jboss-as-kitchensink/"
+        }
+      },
+      {
+        "name": "Start JBoss",
+        "type": "custom",
+        "commandLine": "$JBOSS_HOME/bin/standalone.sh -Djboss.bind.address=0.0.0.0 -Djboss.bind.address.management=0.0.0.0",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        }
+      },
+      {
+        "name": "Stop JBoss",
+        "type": "custom",
+        "commandLine": "$JBOSS_HOME/bin/jboss-cli.sh --connect --controller=127.0.0.1:9990 command=:shutdown",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        }
+      },
+      {
+        "name": "Build",
+        "type": "mvn",
+        "commandLine": "cd ${current.project.path} && mvn clean install",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        }
+      },
+      {
+        "name": "Deploy",
+        "type": "custom",
+        "commandLine": "cd ${current.project.path}/target && warname=$(echo *.war | cut -f 1 -d '.') && rm $JBOSS_HOME/standalone/deployments/${warname}.war.deployed 2>/dev/null; cp ${warname}.war $JBOSS_HOME/standalone/deployments/",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": "http://${server.port.8080}/jboss-as-kitchensink/"
+        }
+      },
+      {
+        "name": "Start JBoss for debug",
+        "type": "custom",
+        "commandLine": "$JBOSS_HOME/bin/standalone.sh -Djboss.bind.address=0.0.0.0 -Djboss.bind.address.management=0.0.0.0 --debug 8000",
+        "attributes": {
+          "goal": "Debug",
+          "previewUrl": ""
+        }
+      }
+    ],
     "links": [],
     "category": "Samples",
     "tags": [
@@ -49,7 +113,8 @@
         "type": "mvn",
         "commandLine": "mvn -f ${current.project.path} clean install -DskipTests",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
@@ -57,23 +122,26 @@
         "type": "custom",
         "commandLine": "$TOMCAT_HOME/bin/catalina.sh stop",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       },
       {
         "name": "build and deploy",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install -DskipTests && cp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war && $TOMCAT_HOME/bin/catalina.sh run 2>&1",
+        "commandLine": "mvn -f ${current.project.path} clean install -DskipTests \ncp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war \n$TOMCAT_HOME/bin/catalina.sh run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       },
       {
         "name": "debug",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install -DskipTests && cp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war && $TOMCAT_HOME/bin/catalina.sh jpda run 2>&1",
+        "commandLine": "mvn -f ${current.project.path} clean install -DskipTests \ncp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war \n$TOMCAT_HOME/bin/catalina.sh jpda run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Debug"
         }
       }
     ],
@@ -117,8 +185,7 @@
     "description": "A blank project example.",
     "projectType": "blank",
     "mixins": [],
-    "attributes": {
-    },
+    "attributes": {},
     "modules": [],
     "problems": [],
     "source": {
@@ -152,9 +219,10 @@
       {
         "name": "build and run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && gcc -o Hello Hello.c && ./Hello",
+        "commandLine": "cd ${current.project.path} \ngcc -o Hello Hello.c \n./Hello",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       }
     ],
@@ -190,7 +258,8 @@
         "type": "custom",
         "commandLine": "mvn -f ${current.project.path} clean install",
         "attributes": {
-          "previewUrl": "http://${server.port.6080}"
+          "previewUrl": "http://${server.port.6080}",
+          "goal": "Run"
         }
       }
     ],
@@ -225,7 +294,8 @@
         "type": "custom",
         "commandLine": "mvn -f ${current.project.path} clean install",
         "attributes": {
-          "previewUrl": "http://${server.port.6080}"
+          "previewUrl": "http://${server.port.6080}",
+          "goal": "Run"
         }
       }
     ],
@@ -258,9 +328,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && go get -d && go run main.go",
+        "commandLine": "cd ${current.project.path} \ngo get -d \ngo run main.go",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       }
     ],
@@ -293,9 +364,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && go get -d && go run main.go",
+        "commandLine": "cd ${current.project.path} \ngo get -d \ngo run main.go",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       }
     ],
@@ -330,13 +402,18 @@
         "type": "mvn",
         "commandLine": "mvn -f ${current.project.path} clean install",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && mvn exec:java -Dexec.mainClass='org.eclipse.che.wordcount.WordCount'"
+        "commandLine": "cd ${current.project.path} \nmvn exec:java -Dexec.mainClass='org.eclipse.che.wordcount.WordCount'",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Run"
+        }
       }
     ],
     "links": [],
@@ -368,9 +445,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && python main.py",
+        "commandLine": "cd ${current.project.path} \npython main.py",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       }
     ],
@@ -403,9 +481,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && sudo virtualenv /env && sudo pip install -r requirements.txt && python main.py",
+        "commandLine": "cd ${current.project.path} \nsudo virtualenv /env \nsudo pip install -r requirements.txt \npython main.py",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       }
     ],
@@ -438,9 +517,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${GAE} && ./dev_appserver.py 2>&1 --skip_sdk_update_check true --host=0.0.0.0 --admin_host=0.0.0.0 ${current.project.path}",
+        "commandLine": "cd ${GAE} \n./dev_appserver.py 2>&1 --skip_sdk_update_check true --host=0.0.0.0 --admin_host=0.0.0.0 ${current.project.path}",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       }
     ],
@@ -473,17 +553,19 @@
       {
         "name": "install dependencies",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && bundle install",
+        "commandLine": "cd ${current.project.path} \nbundle install",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && rails server -b 0.0.0.0",
+        "commandLine": "cd ${current.project.path} \nrails server -b 0.0.0.0",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}"
+          "previewUrl": "http://${server.port.3000}",
+          "goal": "Run"
         }
       }
     ],
@@ -517,9 +599,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && ruby main.rb",
+        "commandLine": "cd ${current.project.path} \nruby main.rb",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       }
     ],
@@ -553,9 +636,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && node app/app.js",
+        "commandLine": "cd ${current.project.path} \nnode app/app.js",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}"
+          "previewUrl": "http://${server.port.3000}",
+          "goal": "Run"
         }
       }
     ],
@@ -588,17 +672,19 @@
       {
         "name": "install dependencies",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && npm install --no-bin-links && bower install",
+        "commandLine": "cd ${current.project.path} \nnpm install --no-bin-links \nbower install",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && grunt server",
+        "commandLine": "cd ${current.project.path} \ngrunt server",
         "attributes": {
-          "previewUrl": "http://${server.port.8003}"
+          "previewUrl": "http://${server.port.8003}",
+          "goal": "Run"
         }
       }
     ],
@@ -634,9 +720,10 @@
       {
         "name": "build",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install && cp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war",
+        "commandLine": "mvn -f ${current.project.path} clean install \ncp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
@@ -644,7 +731,8 @@
         "type": "custom",
         "commandLine": "$TOMCAT_HOME/bin/catalina.sh run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       },
       {
@@ -652,23 +740,26 @@
         "type": "custom",
         "commandLine": "$TOMCAT_HOME/bin/catalina.sh stop",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       },
       {
         "name": "build and run",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install && cp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war && $TOMCAT_HOME/bin/catalina.sh run 2>&1",
+        "commandLine": "mvn -f ${current.project.path} clean install \ncp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war \n$TOMCAT_HOME/bin/catalina.sh run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       },
       {
         "name": "debug",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install && cp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war && $TOMCAT_HOME/bin/catalina.sh jpda run 2>&1",
+        "commandLine": "mvn -f ${current.project.path} clean install \ncp ${current.project.path}/target/*.war $TOMCAT_HOME/webapps/ROOT.war \n$TOMCAT_HOME/bin/catalina.sh jpda run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Debug"
         }
       }
     ],
@@ -703,9 +794,10 @@
       {
         "name": "build and run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && make && ./a.out",
+        "commandLine": "cd ${current.project.path} \nmake \n./a.out",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       }
     ],
@@ -739,17 +831,19 @@
       {
         "name": "install dependencies",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && npm install && bower install",
+        "commandLine": "cd ${current.project.path} \nnpm install \nbower install",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && grunt serve",
+        "commandLine": "cd ${current.project.path} \ngrunt serve",
         "attributes": {
-          "previewUrl": "http://${server.port.9000}"
+          "previewUrl": "http://${server.port.9000}",
+          "goal": "Run"
         }
       }
     ],
@@ -782,9 +876,10 @@
       {
         "name": "start apache",
         "type": "custom",
-        "commandLine": "sudo service apache2 start && sudo tail -f /var/log/apache2/access.log -f /var/log/apache2/error.log",
+        "commandLine": "sudo service apache2 start \nsudo tail -f /var/log/apache2/access.log -f /var/log/apache2/error.log",
         "attributes": {
-          "previewUrl": "http://${server.port.80}/${current.project.relpath}"
+          "previewUrl": "http://${server.port.80}/${current.project.relpath}",
+          "goal": "Run"
         }
       },
       {
@@ -792,7 +887,8 @@
         "type": "custom",
         "commandLine": "sudo service apache2 stop",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       },
       {
@@ -800,7 +896,8 @@
         "type": "custom",
         "commandLine": "sudo service apache2 restart",
         "attributes": {
-          "previewUrl": "http://${server.port.80}/${current.project.relpath}"
+          "previewUrl": "http://${server.port.80}/${current.project.relpath}",
+          "goal": "Run"
         }
       }
     ],
@@ -834,9 +931,10 @@
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${GAE} && ./dev_appserver.py 2>&1 --php_executable_path=/usr/bin/php5-cgi --skip_sdk_update_check true --host=0.0.0.0 --admin_host=0.0.0.0 ${current.project.path}",
+        "commandLine": "cd ${GAE} \n./dev_appserver.py 2>&1 --php_executable_path=/usr/bin/php5-cgi --skip_sdk_update_check true --host=0.0.0.0 --admin_host=0.0.0.0 ${current.project.path}",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       }
     ],
@@ -871,15 +969,17 @@
         "type": "mvn",
         "commandLine": "mvn -f ${current.project.path} clean install",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
         "name": "run",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install && java -jar ${current.project.path}/target/*.jar",
+        "commandLine": "mvn -f ${current.project.path} clean install \njava -jar ${current.project.path}/target/*.jar",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       }
     ],
@@ -913,17 +1013,19 @@
       {
         "name": "update dependencies",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && dotnet restore",
+        "commandLine": "cd ${current.project.path} \ndotnet restore",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
         "name": "run",
         "type": "custom",
-        "commandLine": "cd ${current.project.path} && dotnet run",
+        "commandLine": "cd ${current.project.path} \ndotnet run",
         "attributes": {
-          "previewUrl": "http://${server.port.5000}"
+          "previewUrl": "http://${server.port.5000}",
+          "goal": "Run"
         }
       }
     ],
@@ -956,9 +1058,10 @@
       {
         "name": "build",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install && cp ${current.project.path}/target/*.war $TOMEE_HOME/webapps/ROOT.war",
+        "commandLine": "mvn -f ${current.project.path} clean install \ncp ${current.project.path}/target/*.war $TOMEE_HOME/webapps/ROOT.war",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Build"
         }
       },
       {
@@ -966,7 +1069,8 @@
         "type": "custom",
         "commandLine": "$TOMEE_HOME/bin/catalina.sh run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       },
       {
@@ -974,23 +1078,26 @@
         "type": "custom",
         "commandLine": "$TOMEE_HOME/bin/catalina.sh stop",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Run"
         }
       },
       {
         "name": "build and run",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install && cp ${current.project.path}/target/*.war $TOMEE_HOME/webapps/ROOT.war && $TOMEE_HOME/bin/catalina.sh run 2>&1",
+        "commandLine": "mvn -f ${current.project.path} clean install \ncp ${current.project.path}/target/*.war $TOMEE_HOME/webapps/ROOT.war \n$TOMEE_HOME/bin/catalina.sh run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Run"
         }
       },
       {
         "name": "debug",
         "type": "mvn",
-        "commandLine": "mvn -f ${current.project.path} clean install && cp ${current.project.path}/target/*.war $TOMEE_HOME/webapps/ROOT.war && $TOMEE_HOME/bin/catalina.sh jpda run 2>&1",
+        "commandLine": "mvn -f ${current.project.path} clean install \ncp ${current.project.path}/target/*.war $TOMEE_HOME/webapps/ROOT.war \n$TOMEE_HOME/bin/catalina.sh jpda run 2>&1",
         "attributes": {
-          "previewUrl": "http://${server.port.8080}"
+          "previewUrl": "http://${server.port.8080}",
+          "goal": "Debug"
         }
       }
     ],
@@ -1025,23 +1132,19 @@
       {
         "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && npm install express@4.13.4 && express -f . && cp -rn /bitnami/mongodb/conf ${current.project.path} && npm install mongodb@2.1.18 --save && npm install && counter=0; until nc -z localhost 27017; do counter=$((counter+1)); if [ $counter == 10 ]; then echo \"Error: Couldn't connect to MongoDB.\"; exit 1; fi; echo \"Trying to connect to MongoDB at localhost. Attempt $counter.\"; sleep 5; done; echo \"Connected to MongoDB database. Starting application server.\" && npm start",
+        "commandLine": "print-help \ncd ${current.project.path} \nnpm install express@4.13.4 \nexpress -f . \ncp -rn /bitnami/mongodb/conf ${current.project.path} \nnpm install mongodb@2.1.18 --save \nnpm install \ncounter=0; until nc -z localhost 27017; do counter=$((counter+1)); if [ $counter == 10 ]; then echo \"Error: Couldn't connect to MongoDB.\"; exit 1; fi; echo \"Trying to connect to MongoDB at localhost. Attempt $counter.\"; sleep 5; done; echo \"Connected to MongoDB database. Starting application server.\" \nnpm start",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}"
+          "previewUrl": "http://${server.port.3000}",
+          "goal": "Run"
         }
       },
       {
-        "name": "2. Stop",
+        "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && pkill -u bitnami node && echo \"Web server stopped.\"",
-        "attributes": {}
-      },
-      {
-        "name": "3. Run",
-        "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && npm start",
+        "commandLine": "print-help \ncd ${current.project.path} \nnpm start",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}"
+          "previewUrl": "http://${server.port.3000}",
+          "goal": "Run"
         }
       }
     ],
@@ -1076,14 +1179,20 @@
       {
         "name": "1. Create project",
         "type": "custom",
-        "commandLine": "print-help && mkdir ${current.project.path}/app_template && cd ${current.project.path}/app_template && swift-package init --type executable 2>&1 | grep -v \"no version information available\"; swift build 2>&1 | grep -v \"no version information available\"; echo \"Project built successfully.\"",
-        "attributes": {}
+        "commandLine": "print-help \nmkdir ${current.project.path}/app_template \ncd ${current.project.path}/app_template \nswift-package init --type executable 2>&1 | grep -v \"no version information available\"; swift build 2>&1 | grep -v \"no version information available\"; echo \"Project built successfully.\"",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Run"
+        }
       },
       {
         "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path}/app_template && swift build 2>&1 | grep -v \"no version information available\"; ./.build/debug/app_template",
-        "attributes": {}
+        "commandLine": "print-help \ncd ${current.project.path}/app_template \nswift build 2>&1 | grep -v \"no version information available\"; ./.build/debug/app_template",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Run"
+        }
       }
     ],
     "links": [],
@@ -1117,23 +1226,19 @@
       {
         "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "print-help && sudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb && cp -a /tmp/laravel-sample/. ${current.project.path} && cd ${current.project.path} && composer update && php artisan migrate && php artisan serve --host=0.0.0.0 --port=3000",
+        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb \ncp -an /tmp/laravel-sample/. ${current.project.path} \ncd ${current.project.path} \ncomposer update \nphp artisan migrate \nphp artisan serve --host=0.0.0.0 --port=3000",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}/"
+          "previewUrl": "http://${server.port.3000}/",
+          "goal": "Run"
         }
       },
       {
-        "name": "2. Stop",
+        "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && pkill -u bitnami php && echo \"Web server stopped.\"",
-        "attributes": {}
-      },
-      {
-        "name": "3. Run",
-        "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && php artisan serve --host=0.0.0.0 --port=3000",
+        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb \ncd ${current.project.path} \nphp artisan serve --host=0.0.0.0 --port=3000",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}/"
+          "previewUrl": "http://${server.port.3000}/",
+          "goal": "Run"
         }
       }
     ],
@@ -1168,17 +1273,19 @@
       {
         "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "print-help && sudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb && cd ${current.project.path} && mv README.md README-CHE.md && rails new . --skip-bundle --database mysql && sed -Ei 's/\\s*#\\s*gem(.*)therubyracer/gem\\1therubyracer/' Gemfile && bundle install && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0 -p 3000",
+        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami start mariadb \ncd ${current.project.path} \nmv README.md README-CHE.md \nrails new . --skip-bundle --database mysql \nsed -Ei 's/\\s*#\\s*gem(.*)therubyracer/gem\\1therubyracer/' Gemfile \nbundle install \nbundle exec rails db:create \nbundle exec rails db:migrate \nbundle exec rails server -b 0.0.0.0 -p 3000",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}/"
+          "previewUrl": "http://${server.port.3000}/",
+          "goal": "Run"
         }
       },
       {
         "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && bundle exec rails server -b 0.0.0.0 -p 3000",
+        "commandLine": "print-help \ncd ${current.project.path} \nbundle exec rails server -b 0.0.0.0 -p 3000",
         "attributes": {
-          "previewUrl": "http://${server.port.3000}/"
+          "previewUrl": "http://${server.port.3000}/",
+          "goal": "Run"
         }
       }
     ],
@@ -1213,17 +1320,19 @@
       {
         "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "print-help && sudo HOME=/root /opt/bitnami/nami/bin/nami execute codeigniter createProject --force $(basename ${current.project.path}) | grep -v undefined && php -S 0.0.0.0:8000 -t ${current.project.path}",
+        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami execute codeigniter createProject --force $(basename ${current.project.path}) | grep -v undefined \nphp -S 0.0.0.0:8000 -t ${current.project.path}",
         "attributes": {
-          "previewUrl": "http://${server.port.8000}/"
+          "previewUrl": "http://${server.port.8000}/",
+          "goal": "Run"
         }
       },
       {
         "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help && php -S 0.0.0.0:8000 -t ${current.project.path}",
+        "commandLine": "print-help \nphp -S 0.0.0.0:8000 -t ${current.project.path}",
         "attributes": {
-          "previewUrl": "http://${server.port.8000}/"
+          "previewUrl": "http://${server.port.8000}/",
+          "goal": "Run"
         }
       }
     ],
@@ -1258,17 +1367,19 @@
       {
         "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "print-help && sudo HOME=/root nami execute symfony createProject --force $(basename ${current.project.path}) | grep -v undefined && ln -fs ${current.project.path}/web/app.php ${current.project.path}/web/index.php && php -S 0.0.0.0:8000 -t ${current.project.path}/web",
+        "commandLine": "print-help \nsudo HOME=/root nami execute symfony createProject --force $(basename ${current.project.path}) | grep -v undefined \nln -fs ${current.project.path}/web/app.php ${current.project.path}/web/index.php \nphp -S 0.0.0.0:8000 -t ${current.project.path}/web",
         "attributes": {
-          "previewUrl": "http://${server.port.8000}/"
+          "previewUrl": "http://${server.port.8000}/",
+          "goal": "Run"
         }
       },
       {
         "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help && php -S 0.0.0.0:8000 -t ${current.project.path}/web",
+        "commandLine": "print-help \nphp -S 0.0.0.0:8000 -t ${current.project.path}/web",
         "attributes": {
-          "previewUrl": "http://${server.port.8000}/"
+          "previewUrl": "http://${server.port.8000}/",
+          "goal": "Run"
         }
       }
     ],
@@ -1303,23 +1414,19 @@
       {
         "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "print-help && sudo HOME=/root /opt/bitnami/nami/bin/nami execute activator createProject --force $(basename ${current.project.path}) play-java | grep -v undefined && cd ${current.project.path} && /opt/bitnami/activator/bin/activator -Dsbt.log.noformat=true -Doffline=true -Dhttp.host=0.0.0.0 -Dhttp.port=9000 ~run",
+        "commandLine": "print-help \nsudo HOME=/root /opt/bitnami/nami/bin/nami execute activator createProject --force $(basename ${current.project.path}) play-java | grep -v undefined \ncd ${current.project.path} \n/opt/bitnami/activator/bin/activator -Dsbt.log.noformat=true -Doffline=true -Dhttp.host=0.0.0.0 -Dhttp.port=9000 ~run",
         "attributes": {
-          "previewUrl": "http://${server.port.9000}/"
+          "previewUrl": "http://${server.port.9000}/",
+          "goal": "Run"
         }
       },
       {
-        "name": "2. Stop",
+        "name": "2. Run",
         "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && pkill -u bitnami -n java && echo \"Web server stopped.\"",
-        "attributes": {}
-      },
-      {
-        "name": "3. Run",
-        "type": "custom",
-        "commandLine": "print-help && cd ${current.project.path} && /opt/bitnami/activator/bin/activator -Doffline=true -Dhttp.host=0.0.0.0 -Dhttp.port=9000 -Dsbt.log.noformat=true ~run",
+        "commandLine": "print-help \ncd ${current.project.path} \n/opt/bitnami/activator/bin/activator -Doffline=true -Dhttp.host=0.0.0.0 -Dhttp.port=9000 -Dsbt.log.noformat=true ~run",
         "attributes": {
-          "previewUrl": "http://${server.port.9000}/"
+          "previewUrl": "http://${server.port.9000}/",
+          "goal": "Run"
         }
       }
     ],
@@ -1352,17 +1459,19 @@
       {
         "name": "configure",
         "type": "custom",
-        "commandLine": "chmod 777 ${current.project.path}/data; echo \"<VirtualHost *:80>\n    DocumentRoot ${current.project.path}/public\n    SetEnv APPLICATION_ENV 'development'\n    <Directory ${current.project.path}/public>\n        DirectoryIndex index.php\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>\" | sudo tee /etc/apache2/sites-available/000-default.conf; cp /usr/local/zend/etc/php.ini /tmp/update-php.ini && grep -q 'extension=pcntl.so' /tmp/update-php.ini || echo \"\nextension=pcntl.so\" | sudo tee -a /tmp/update-php.ini && php -c /tmp/update-php.ini ${current.project.path}/bin/update.php && rm /tmp/update-php.ini",
+        "commandLine": "chmod 777 ${current.project.path}/data; echo \"<VirtualHost *:80>\n    DocumentRoot ${current.project.path}/public\n    SetEnv APPLICATION_ENV 'development'\n    <Directory ${current.project.path}/public>\n        DirectoryIndex index.php\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>\" | sudo tee /etc/apache2/sites-available/000-default.conf; cp /usr/local/zend/etc/php.ini /tmp/update-php.ini \ngrep -q 'extension=pcntl.so' /tmp/update-php.ini || echo \"\nextension=pcntl.so\" | sudo tee -a /tmp/update-php.ini \nphp -c /tmp/update-php.ini ${current.project.path}/bin/update.php \nrm /tmp/update-php.ini",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Common"
         }
       },
       {
         "name": "update images",
         "type": "custom",
-        "commandLine": "cp /usr/local/zend/etc/php.ini /tmp/update-php.ini && grep -q 'extension=pcntl.so' /tmp/update-php.ini || echo \"\nextension=pcntl.so\" | sudo tee -a /tmp/update-php.ini && php -c /tmp/update-php.ini ${current.project.path}/bin/update.php && rm /tmp/update-php.ini",
+        "commandLine": "cp /usr/local/zend/etc/php.ini /tmp/update-php.ini \ngrep -q 'extension=pcntl.so' /tmp/update-php.ini || echo \"\nextension=pcntl.so\" | sudo tee -a /tmp/update-php.ini \nphp -c /tmp/update-php.ini ${current.project.path}/bin/update.php \nrm /tmp/update-php.ini",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Common"
         }
       },
       {
@@ -1370,7 +1479,8 @@
         "type": "custom",
         "commandLine": "sudo rm -rf ${current.project.path}/data/doctrine-cache",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Common"
         }
       }
     ],
@@ -1404,7 +1514,8 @@
         "type": "custom",
         "commandLine": "chmod 777 ${current.project.path}/data/cache; echo \"<VirtualHost *:80>\n    DocumentRoot ${current.project.path}/public\n    SetEnv APPLICATION_ENV 'development'\n    <Directory ${current.project.path}/public>\n        DirectoryIndex index.php\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>\" | sudo tee /etc/apache2/sites-available/000-default.conf",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Common"
         }
       }
     ],
@@ -1438,7 +1549,8 @@
         "type": "custom",
         "commandLine": "chmod 777 ${current.project.path}/data/cache; echo \"<VirtualHost *:80>\n    DocumentRoot ${current.project.path}/public\n    SetEnv APPLICATION_ENV 'development'\n    <Directory ${current.project.path}/public>\n        DirectoryIndex index.php\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>\" | sudo tee /etc/apache2/sites-available/000-default.conf",
         "attributes": {
-          "previewUrl": ""
+          "previewUrl": "",
+          "goal": "Common"
         }
       }
     ],
@@ -1471,8 +1583,7 @@
         "convertToTopLevelProject": "true"
       }
     },
-    "commands": [
-    ],
+    "commands": [],
     "links": [],
     "category": "Samples",
     "tags": [
@@ -1502,8 +1613,7 @@
         "convertToTopLevelProject": "true"
       }
     },
-    "commands": [
-    ],
+    "commands": [],
     "links": [],
     "category": "Samples",
     "tags": [
@@ -1533,8 +1643,7 @@
         "convertToTopLevelProject": "true"
       }
     },
-    "commands": [
-    ],
+    "commands": [],
     "links": [],
     "category": "Samples",
     "tags": [
