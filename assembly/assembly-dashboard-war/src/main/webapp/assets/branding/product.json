@@ -1,10 +1,10 @@
 {
   "title": "RedHat",
   "name": "RedHat",
-  "logoFile": "codenvy-logo.svg",
-  "logoTextFile": "codenvy-logo-text.svg",
+  "logoFile": "redhat-logo.svg",
+  "logoTextFile": "RHDP_logo_RGB_reverse.svg",
   "favicon": "favicon.ico",
-  "loader": "loader.svg",
+  "loader": "redhat-loader.svg",
   "ideResources": "/ide-resources/_app/",
   "helpPath": "https://codenvy.com/support/",
   "helpTitle": "Help",
