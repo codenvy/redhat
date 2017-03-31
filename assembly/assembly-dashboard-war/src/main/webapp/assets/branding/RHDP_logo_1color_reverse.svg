@@ -16,9 +16,11 @@
 	 viewBox="0 0 1000 300"
 	 style="enable-background:new 0 0 1000 300;"
 	 xml:space="preserve"
-	 width="100%"
-	 height="100%"
-	 fill="#292C2F">
+     width="100%"
+	 height="100%">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
 <g>
 	<polygon class="st0" points="235.5,94.8 206.3,124.1 230.6,148.4 289.1,148.4 	"/>
 	<polygon class="st0" points="153,226 128.7,201.7 99.4,230.9 153,284.5 153,284.5 153,226 	"/>
