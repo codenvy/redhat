@@ -24,6 +24,15 @@
             <useProjectArtifact>false</useProjectArtifact>
             <unpack>false</unpack>
             <outputDirectory>webapps</outputDirectory>
+            <outputFileNameMapping>api.war</outputFileNameMapping>
+            <includes>
+                <include>com.codenvy.redhat:assembly-wsmaster-war</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <unpack>false</unpack>
+            <outputDirectory>webapps</outputDirectory>
             <outputFileNameMapping>site.war</outputFileNameMapping>
             <includes>
                 <include>com.codenvy.redhat:assembly-website-war</include>
@@ -79,6 +88,7 @@
             <directory>${project.build.directory}/dependency/codenvy-onpremises-${codenvy.version}</directory>
             <outputDirectory>/</outputDirectory>
             <excludes>
+                <exclude>**/webapps/api.war</exclude>
                 <exclude>**/webapps/ROOT.war</exclude>
                 <exclude>**/webapps/dashboard.war</exclude>
                 <exclude>**/webapps/site.war</exclude>

@@ -16,7 +16,7 @@
     <parent>
         <artifactId>maven-depmgt-pom</artifactId>
         <groupId>org.eclipse.che.depmgt</groupId>
-        <version>5.6.0-SNAPSHOT</version>
+        <version>5.6.0</version>
     </parent>
     <groupId>com.codenvy.redhat</groupId>
     <artifactId>redhat-parent</artifactId>
@@ -26,11 +26,12 @@
     <modules>
         <module>ide</module>
         <module>plugins</module>
+        <module>site</module>
         <module>assembly</module>
     </modules>
     <properties>
-        <che.version>5.6.0-SNAPSHOT</che.version>
-        <codenvy.version>5.6.0-SNAPSHOT</codenvy.version>
+        <che.version>5.6.0</che.version>
+        <codenvy.version>5.6.0</codenvy.version>
         <site.classifier>onprem-se</site.classifier>
     </properties>
     <dependencyManagement>
@@ -40,11 +41,6 @@
                 <artifactId>assembly-ide-war</artifactId>
                 <version>${codenvy.version}</version>
                 <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.onpremises</groupId>
-                <artifactId>site</artifactId>
-                <version>${che.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat</groupId>
@@ -108,6 +104,11 @@
                 <artifactId>compiling-ide-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>site</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>

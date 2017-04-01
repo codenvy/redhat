@@ -1,0 +1,5 @@
+# jekyll configuration used for the production build
+
+port: 4000
+destination: ../prod
+profile: production
