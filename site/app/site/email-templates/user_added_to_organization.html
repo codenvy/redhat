@@ -1,0 +1,32 @@
+---
+layout : email-template
+title: Red Hat IDE
+header: YOU HAVE BEEN ADDED TO A Red Hat CLOUD IDE TEAM
+---
+<table style="font-family: 'New Century Schoolbook', 'Crimson Text'; box-sizing: border-box; font-size: 13px; width: 100%; margin: 0; text-align: left; padding: 7px 25px 10px 10px;" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td style="font-family: 'New Century Schoolbook', 'Crimson Text'; box-sizing: border-box; font-size: 13px; vertical-align: top; max-width: 520px !important; clear: both !important; margin: 0 auto; padding: 0;">
+            <table style="font-family: 'New Century Schoolbook', 'Crimson Text'; box-sizing: border-box; font-size: 13px; width: 100%; margin: 0; padding: 0;">
+                <tbody>
+                    <tr>
+                        <td style="font-family: 'New Century Schoolbook', 'Crimson Text'; box-sizing: border-box; font-size: 13px; vertical-align: top; max-width: 520px !important; clear: both !important; margin: 0 auto; padding: 0;">
+                            <p style="{{site.paragraph_style}}">
+                                Hi,
+                            </p>
+                            <h4 style="{{site.h4_style}}"></h4>
+                            <p style="{{site.paragraph_style}}">
+                                <span th:text="${initiator}"></span> added you to a Red Hat Cloud IDE team called <span th:text="${organizationName}"></span>.
+                                <br/>
+                                Access the organization here <a style="{{site.link_style}}" th:href="@{${dashboardEndpoint} + '/#/organization/' + ${orgQualifiedName}}">link</a>.
+                            </p>
+                            <h4 style="{{site.h4_style}}"></h4>
+                            <p style="{{site.paragraph_style}}">
+                                Enjoy!<br/>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>

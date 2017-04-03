@@ -26,6 +26,7 @@
     <modules>
         <module>ide</module>
         <module>plugins</module>
+        <module>site</module>
         <module>assembly</module>
     </modules>
     <properties>
@@ -40,11 +41,6 @@
                 <artifactId>assembly-ide-war</artifactId>
                 <version>${codenvy.version}</version>
                 <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.onpremises</groupId>
-                <artifactId>site</artifactId>
-                <version>${che.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat</groupId>
@@ -108,6 +104,11 @@
                 <artifactId>compiling-ide-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat</groupId>
+                <artifactId>site</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>

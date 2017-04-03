@@ -14,43 +14,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>redhat-assembly-parent</artifactId>
+        <artifactId>redhat-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
         <version>0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>assembly-wsmaster-war</artifactId>
+    <artifactId>site</artifactId>
+    <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>RedHat :: WAR      :: API</name>
-    <dependencies>
-        <dependency>
-            <groupId>com.codenvy.onpremises</groupId>
-            <artifactId>assembly-wsmaster-war</artifactId>
-            <type>war</type>
-        </dependency>
-    </dependencies>
+    <name>RedHat :: Website</name>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/source-war</outputDirectory>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.codenvy.onpremises</groupId>
-                                    <artifactId>assembly-wsmaster-war</artifactId>
-                                    <type>war</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
                     <execution>
                         <id>copy-site</id>
                         <phase>generate-sources</phase>
@@ -61,7 +39,7 @@
                             <stripVersion>true</stripVersion>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>com.codenvy.redhat</groupId>
+                                    <groupId>com.codenvy.onpremises</groupId>
                                     <artifactId>site</artifactId>
                                     <classifier>${site.classifier}</classifier>
                                     <type>zip</type>
@@ -75,6 +53,23 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <!-- Download NPM dependencies -->
+                                <exec dir="${basedir}" executable="npm" failonerror="true">
+                                    <arg value="install" />
+                                </exec>
+                                <exec dir="${basedir}" executable="gulp" failonerror="true">
+                                    <arg value="prod" />
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>unzip-site</id>
                         <phase>prepare-package</phase>
                         <goals>
@@ -82,33 +77,43 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <unzip dest="${project.build.directory}/unzip/site" src="${project.build.directory}/dependency/site-${site.classifier}.zip" />
-                                <copy overwrite="true" todir="${project.build.directory}/source-war/WEB-INF/classes/email-templates">
-                                    <fileset dir="${project.build.directory}/unzip/site/site/email-templates" />
+                                <unzip dest="${project.build.directory}/source-zip" src="${project.build.directory}/dependency/site-${site.classifier}.zip" />
+                                <copy overwrite="true" todir="${project.build.directory}/source-zip/site">
+                                    <fileset dir="${project.build.directory}/dist/prod/site" />
                                 </copy>
-                                <copy file="${project.build.directory}/unzip/site/site/images/mail/header.png" overwrite="true" todir="${project.build.directory}/source-war/WEB-INF/classes/email-templates" />
                             </tasks>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/node_modules</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
-                        <phase>prepare-package</phase>
+                        <id>prod</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}-${project.version}</finalName>
+                            <descriptors>
+                                <descriptor>assembly/assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <updateOnly>false</updateOnly>
-                    <descriptor>${project.basedir}/src/assembly/assembly.xml</descriptor>
-                </configuration>
             </plugin>
         </plugins>
     </build>

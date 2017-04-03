@@ -67,7 +67,7 @@
                             <stripVersion>true</stripVersion>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>com.codenvy.onpremises</groupId>
+                                    <groupId>com.codenvy.redhat</groupId>
                                     <artifactId>site</artifactId>
                                     <classifier>${site.classifier}</classifier>
                                     <type>zip</type>

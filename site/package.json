@@ -1,0 +1,12 @@
+{
+  "author": "Viktor Kuznyetsov",
+  "name": "Silexica-site",
+  "version": "1.0.0",
+  "license": "SEE LICENSE IN copyright.txt",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-shell": "^0.2.9"
+  }
+}
