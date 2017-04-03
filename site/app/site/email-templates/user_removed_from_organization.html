@@ -9,16 +9,16 @@ title: Red Hat Cloud IDE
                 <tbody>
                     <tr>
                         <td style="font-family: 'New Century Schoolbook', 'Crimson Text'; box-sizing: border-box; font-size: 13px; vertical-align: top; max-width: 520px !important; clear: both !important; margin: 0 auto; padding: 0;">
-                            <p style="font-size: 16px; margin: 2px 0px;">
+                            <p style="{{site.paragraph_style}}">
                                 Hi,
                             </p>
-                            <h4 style="font-family: 'Roboto Condensed'; font-size: 18px; margin: 30px 0px 8px 0px;"></h4>
-                            <p style="font-size: 16px; margin: 2px 0px;">
-                                <span th:text="${teamOldName}"></span> team has been renamed to <span th:text="${teamNewName}"></span>.
+                            <h4 style="{{site.h4_style}}"></h4>
+                            <p style="{{site.paragraph_style}}">
+                                <span th:text="${initiator}"></span> removed you from a Red Hat Cloud IDE team called <span th:text="${organizationName}"></span>.
                             </p>
-                            <h4 style="font-family: 'Roboto Condensed'; font-size: 18px; margin: 30px 0px 8px 0px;"></h4>
-                            <p style="font-size: 16px; margin: 2px 0px;">
-                                Red Hat Cloud IDE Admin
+                            <h4 style="{{site.h4_style}}"></h4>
+                            <p style="{{site.paragraph_style}}">
+                                The Red Hat Admin
                             </p>
                         </td>
                     </tr>
