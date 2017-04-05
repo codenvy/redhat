@@ -13,7 +13,7 @@ package com.codenvy.redhat.plugin.product.info.client.inject;
 import com.codenvy.redhat.plugin.product.info.client.CodenvyProductInfoDataProvider;
 import com.google.gwt.inject.client.AbstractGinModule;
 
-import org.eclipse.che.ide.api.ProductInfoDataProvider;
+import org.eclipse.che.ide.api.ProductInfoDataProviderImpl;
 import org.eclipse.che.ide.api.extension.ExtensionGinModule;
 
 /**
@@ -24,6 +24,6 @@ public class ProductInfoGinModule extends AbstractGinModule {
     /** {@inheritDoc} */
     @Override
     protected void configure() {
-        bind(ProductInfoDataProvider.class).to(CodenvyProductInfoDataProvider.class);
+        bind(ProductInfoDataProviderImpl.class).to(CodenvyProductInfoDataProvider.class);
     }
 }
