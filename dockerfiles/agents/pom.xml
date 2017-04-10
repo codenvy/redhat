@@ -19,11 +19,11 @@
         <version>0.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <groupId>com.codenvy.saas.dockerfiles</groupId>
+    <groupId>com.codenvy.redhat.dockerfiles</groupId>
     <artifactId>dockerfiles-agents</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>SAAS :: Dockerfiles :: Agents</name>
+    <name>RedHat :: Dockerfiles :: Agents</name>
     <dependencies>
         <dependency>
             <groupId>com.codenvy.redhat</groupId>
