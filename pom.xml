@@ -28,6 +28,7 @@
         <module>plugins</module>
         <module>site</module>
         <module>assembly</module>
+        <module>dockerfiles/agents</module>
     </modules>
     <properties>
         <che.version>5.7.0-SNAPSHOT</che.version>
