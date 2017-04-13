@@ -34,8 +34,8 @@
     <properties>
         <che.version>5.9.0-SNAPSHOT</che.version>
         <codenvy.version>5.9.0-SNAPSHOT</codenvy.version>
-        <site.classifier>onprem-se</site.classifier>
         <freemarker.version>2.3.20</freemarker.version>
+        <site.classifier>onprem-se</site.classifier>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -139,6 +139,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.codenvy.onpremises</groupId>
                 <artifactId>onpremises-assembly-parent</artifactId>
                 <version>${codenvy.version}</version>
@@ -151,11 +156,6 @@
                 <version>${che.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.freemarker</groupId>
-                <artifactId>freemarker</artifactId>
-                <version>${freemarker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
