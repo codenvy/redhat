@@ -1,0 +1,3 @@
+1492093696000
+IDE\.jsp, META-INF/context\.xml, WEB-INF/classes/(?:[^/]+/)*?[^/]*?, WEB-INF/lib/[^/]*?\.[^/]*?, WEB-INF/rewrite\.config, WEB-INF/web\.xml, _app/activity\.js, _app/browserNotSupported\.js
+META-INF(?:$|/.+)

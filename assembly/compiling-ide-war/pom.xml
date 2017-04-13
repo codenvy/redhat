@@ -40,6 +40,10 @@
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>
+            <artifactId>plugin-cheatsheeter-docs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.codenvy.redhat.plugin</groupId>
             <artifactId>plugin-redhat-help</artifactId>
         </dependency>
         <dependency>

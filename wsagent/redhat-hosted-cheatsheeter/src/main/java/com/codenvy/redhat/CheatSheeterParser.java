@@ -1,0 +1,57 @@
+/*******************************************************************************
+ * Copyright (c) 2012-2017 Codenvy, S.A.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   Codenvy, S.A. - initial API and implementation
+ *******************************************************************************/
+package com.codenvy.redhat;
+
+import org.eclipse.che.api.core.ApiException;
+
+import javax.inject.Inject;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+/**
+ * @author Alexander Andrienko
+ */
+public class CheatSheeterParser {
+
+    private static final String HTML_NAME       = "index.html";
+    private static final String PARSER_LOCATION = "/home/user/docsparser/cheatsheeter";
+    private static final String RESOURCE_PATH   = "https://github.com/jboss-developer/jboss-eap-quickstarts/raw/7.0.x/kitchensink/.cheatsheet.xml";
+    private static final String OUT_PATH        = "/home/user/docsparser/docs/" + HTML_NAME;
+
+    @Inject
+    public CheatSheeterParser() {
+    }
+
+    public String parse() throws ApiException {
+        String result;
+        String[] commands = new String[]{PARSER_LOCATION,
+                                         "-file=" + RESOURCE_PATH,
+                                         "-out=" + HTML_NAME};
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);//use processUtil
+            Process parseProces = processBuilder.start();
+
+            int exitCode = parseProces.waitFor();
+            if (exitCode != 0) {
+                throw new ApiException("Failed to launch docs parser.");
+            }
+            result = new String(Files.readAllBytes(Paths.get(OUT_PATH)), UTF_8);
+        } catch (InterruptedException | IOException e) {
+            throw new ApiException("Failed to parse docs");
+        }
+
+        return result;
+    }
+}

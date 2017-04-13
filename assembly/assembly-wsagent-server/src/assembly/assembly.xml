@@ -24,4 +24,15 @@
             <outputDirectory>/</outputDirectory>
         </fileSet>
     </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <unpack>false</unpack>
+            <outputDirectory>webapps</outputDirectory>
+            <outputFileNameMapping>ROOT.war</outputFileNameMapping>
+            <includes>
+                <include>com.codenvy.redhat:assembly-wsagent-war</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
 </assembly>

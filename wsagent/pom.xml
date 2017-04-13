@@ -17,15 +17,12 @@
         <artifactId>redhat-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
         <version>0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>com.codenvy.redhat.plugin</groupId>
-    <artifactId>plugin-parent</artifactId>
+    <groupId>com.codenvy.redhat.wsagent</groupId>
+    <artifactId>redhat-wsagent-parent</artifactId>
     <packaging>pom</packaging>
-    <name>RedHat :: Plugins  :: Parent</name>
+    <name>Redhat Agent Parent</name>
     <modules>
-        <module>plugin-redhat-help</module>
-        <module>plugin-redhat-product-info</module>
-        <module>plugin-cheatsheeter-docs</module>
+        <module>redhat-hosted-cheatsheeter</module>
     </modules>
 </project>

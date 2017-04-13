@@ -16,7 +16,7 @@
     <parent>
         <artifactId>maven-depmgt-pom</artifactId>
         <groupId>org.eclipse.che.depmgt</groupId>
-        <version>5.8.0-SNAPSHOT</version>
+        <version>5.9.0-SNAPSHOT</version>
     </parent>
     <groupId>com.codenvy.redhat</groupId>
     <artifactId>redhat-parent</artifactId>
@@ -26,14 +26,16 @@
     <modules>
         <module>ide</module>
         <module>plugins</module>
+        <module>wsagent</module>
         <module>site</module>
         <module>assembly</module>
         <module>dockerfiles/agents</module>
     </modules>
     <properties>
-        <che.version>5.8.0-SNAPSHOT</che.version>
-        <codenvy.version>5.8.0-SNAPSHOT</codenvy.version>
+        <che.version>5.9.0-SNAPSHOT</che.version>
+        <codenvy.version>5.9.0-SNAPSHOT</codenvy.version>
         <site.classifier>onprem-se</site.classifier>
+        <freemarker.version>2.3.20</freemarker.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -113,12 +115,27 @@
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>
+                <artifactId>plugin-cheatsheeter-docs</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.plugin</groupId>
                 <artifactId>plugin-redhat-help</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>
                 <artifactId>plugin-redhat-product-info</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.wsagent</groupId>
+                <artifactId>redhat-core-api-cheatsheeter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.wsagent</groupId>
+                <artifactId>wsagent</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -134,6 +151,11 @@
                 <version>${che.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
