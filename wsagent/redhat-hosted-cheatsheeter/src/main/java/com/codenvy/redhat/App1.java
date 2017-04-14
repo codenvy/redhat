@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012-2017 Codenvy, S.A.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   Codenvy, S.A. - initial API and implementation
+ *******************************************************************************/
 package com.codenvy.redhat;
 
 import freemarker.template.Configuration;
@@ -27,17 +37,16 @@ public class App1 {//TODO unexpected element handle....
     public static void main(String[] args) throws JAXBException, IOException, TemplateException {
         CheatSheet cheatSheet = null;
         try {
-            JAXBContext jc = JAXBContext.newInstance ("com.codenvy.redhat.model");
+            JAXBContext jc = JAXBContext.newInstance("com.codenvy.redhat.model");
 
-            Unmarshaller u = jc.createUnmarshaller ();
+            Unmarshaller u = jc.createUnmarshaller();
 
-            File f = new File ("/home/antey/projects/redhat/wsagent/redhat-hosted-cheatsheeter/src/main/resources/input.xml");
+            File f = new File ("/home/user/projects/redhat/wsagent/redhat-hosted-cheatsheeter/src/main/resources/input.xml");
             JAXBElement element = (JAXBElement) u.unmarshal(f);
 
             cheatSheet = (CheatSheet) element.getValue();
-            System.out.println(cheatSheet.getTitle());
         } catch (JAXBException e) {
-            e.printStackTrace ();
+            e.printStackTrace();
         }
 
         Configuration cfg = new Configuration();

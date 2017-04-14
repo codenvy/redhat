@@ -14,7 +14,6 @@ import com.codenvy.redhat.plugin.cheatsheeter.docs.client.CheatSheeterLocalizati
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 
-import org.eclipse.che.api.core.model.workspace.Workspace;
 import org.eclipse.che.ide.api.app.AppContext;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
 import org.eclipse.che.ide.util.loging.Log;
@@ -48,11 +47,6 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     }
 
     public void init() {
-        Workspace workspace = appContext.getWorkspace();
-        if (workspace == null || appContext.getResources() == null || appContext.getResources().length == 0) {
-            return;
-        }
-
         view.setUrl(getDocsUrl());
         Log.info(getClass(), getDocsUrl());
     }

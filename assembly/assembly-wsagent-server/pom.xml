@@ -49,7 +49,6 @@
                                     <outputDirectory>${project.build.directory}/dependency</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
-                            <excludes>webapps/ROOT.war</excludes>
                         </configuration>
                     </execution>
                 </executions>

@@ -13,6 +13,12 @@ package com.codenvy.redhat.plugin.cheatsheeter.docs.client;
 import com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs.DocsPartPresenter;
 import com.google.web.bindery.event.shared.EventBus;
 
+import org.eclipse.che.ide.api.app.AppContext;
+import org.eclipse.che.ide.api.event.project.CreateProjectEvent;
+import org.eclipse.che.ide.api.event.project.CreateProjectHandler;
+import org.eclipse.che.ide.api.event.project.DeleteProjectEvent;
+import org.eclipse.che.ide.api.event.project.DeleteProjectHandler;
+import org.eclipse.che.ide.api.event.project.ProjectUpdatedEvent;
 import org.eclipse.che.ide.api.extension.Extension;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
@@ -33,13 +39,15 @@ public class CheatSheeterExtension {
 
     @Inject
     public CheatSheeterExtension(EventBus eventBus,
-                                 final DocsPartPresenter docsPartPresenter,
-                                 final WorkspaceAgent workspaceAgent) {
+                                 DocsPartPresenter docsPartPresenter,
+                                 WorkspaceAgent workspaceAgent,
+                                 AppContext appContext) {
         eventBus.addHandler(WsAgentStateEvent.TYPE, new WsAgentStateHandler() {
             @Override
             public void onWsAgentStarted(WsAgentStateEvent wsAgentStateEvent) {
-                docsPartPresenter.init();
-                if (docsPartPresenter.getDocsUrl() != null) {
+                if ((docsPartPresenter.getPartStack() == null || !docsPartPresenter.getPartStack().containsPart(docsPartPresenter))
+                    && appContext.getProjects().length > 0) {
+                    docsPartPresenter.init();
                     workspaceAgent.openPart(docsPartPresenter, PartStackType.TOOLING);
                 }
             }
@@ -47,6 +55,32 @@ public class CheatSheeterExtension {
             @Override
             public void onWsAgentStopped(WsAgentStateEvent wsAgentStateEvent) {
                 workspaceAgent.removePart(docsPartPresenter);
+            }
+        });
+        eventBus.addHandler(DeleteProjectEvent.TYPE, new DeleteProjectHandler() {
+            @Override
+            public void onProjectDeleted(DeleteProjectEvent deleteProjectEvent) {
+                if (appContext.getProjects() == null) {
+                    workspaceAgent.removePart(docsPartPresenter);
+                }
+            }
+        });
+        //todo remove project action and add project action. Find project by path
+        eventBus.addHandler(CreateProjectEvent.TYPE, new CreateProjectHandler() {
+            @Override
+            public void onProjectCreated(CreateProjectEvent createProjectEvent) {
+                if (appContext.getProjectsRoot() != null) {
+                    workspaceAgent.openPart(docsPartPresenter, PartStackType.TOOLING);
+                }
+            }
+        });
+
+        eventBus.addHandler(ProjectUpdatedEvent.getType(), new ProjectUpdatedEvent.ProjectUpdatedHandler() {
+            @Override
+            public void onProjectUpdated(ProjectUpdatedEvent projectUpdatedEvent) {
+                if (appContext.getProjectsRoot() != null) {
+                    workspaceAgent.openPart(docsPartPresenter, PartStackType.TOOLING);
+                }
             }
         });
     }

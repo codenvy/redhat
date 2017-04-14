@@ -22,6 +22,9 @@
         <fileSet>
             <directory>${project.build.directory}/dependency/</directory>
             <outputDirectory>/</outputDirectory>
+            <excludes>
+                <exclude>webapps/ROOT.war</exclude>
+            </excludes>
         </fileSet>
     </fileSets>
     <dependencySets>
