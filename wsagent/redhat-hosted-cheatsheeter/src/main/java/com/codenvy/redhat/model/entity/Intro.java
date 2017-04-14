@@ -1,8 +1,10 @@
 package com.codenvy.redhat.model.entity;
 
+import com.codenvy.redhat.handlers.DescriptionTagHandler;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Intro {
-    @XmlElement
+    @XmlAnyElement(value = DescriptionTagHandler.class)
     private String description;
 
     public String getDescription() {

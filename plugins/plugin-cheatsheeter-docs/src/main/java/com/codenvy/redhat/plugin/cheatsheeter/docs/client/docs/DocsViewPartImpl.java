@@ -8,9 +8,9 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.plugin.cheatcheeter.docs.client.docs;
+package com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs;
 
-import com.codenvy.redhat.plugin.cheatcheeter.docs.client.CheatSheeterLocalizationConstant;
+import com.codenvy.redhat.plugin.cheatsheeter.docs.client.CheatSheeterLocalizationConstant;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Frame;

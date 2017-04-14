@@ -8,9 +8,9 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.plugin.cheatcheeter.docs.client.docs;
+package com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs;
 
-import com.codenvy.redhat.plugin.cheatcheeter.docs.client.CheatSheeterLocalizationConstant;
+import com.codenvy.redhat.plugin.cheatsheeter.docs.client.CheatSheeterLocalizationConstant;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 
@@ -30,7 +30,7 @@ import javax.inject.Singleton;
 @Singleton
 public class DocsPartPresenter extends BasePresenter implements DocsViewPart.ActionDelegate {
 
-    private static final String DOC_URL = "https://github.com/jboss-developer/jboss-eap-quickstarts/raw/7.0.x/kitchensink/.cheatsheet.xml";
+    private static final String CHEAT_SHEETER_DOCS = "/cheatsheeter";
 
     private final DocsViewPart                     view;
     private final CheatSheeterLocalizationConstant constants;
@@ -53,8 +53,8 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
             return;
         }
 
-        view.setUrl(DOC_URL);
-        Log.info(getClass(), DOC_URL);
+        view.setUrl(getDocsUrl());
+        Log.info(getClass(), getDocsUrl());
     }
 
     @Override
@@ -78,6 +78,6 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     }
 
     public String getDocsUrl() {
-        return DOC_URL;
+        return appContext.getDevMachine().getWsAgentBaseUrl() + CHEAT_SHEETER_DOCS;
     }
 }

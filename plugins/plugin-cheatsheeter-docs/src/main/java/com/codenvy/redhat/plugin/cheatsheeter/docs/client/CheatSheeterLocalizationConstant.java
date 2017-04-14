@@ -8,7 +8,7 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.plugin.cheatcheeter.docs.client;
+package com.codenvy.redhat.plugin.cheatsheeter.docs.client;
 
 import com.google.gwt.i18n.client.Messages;
 

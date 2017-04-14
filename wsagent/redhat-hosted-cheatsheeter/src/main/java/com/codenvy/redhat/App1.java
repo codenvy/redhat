@@ -31,7 +31,7 @@ public class App1 {//TODO unexpected element handle....
 
             Unmarshaller u = jc.createUnmarshaller ();
 
-            File f = new File ("/home/user/projects/redhat/wsagent/redhat-hosted-cheatsheeter/src/main/resources/input.xml");
+            File f = new File ("/home/antey/projects/redhat/wsagent/redhat-hosted-cheatsheeter/src/main/resources/input.xml");
             JAXBElement element = (JAXBElement) u.unmarshal(f);
 
             cheatSheet = (CheatSheet) element.getValue();

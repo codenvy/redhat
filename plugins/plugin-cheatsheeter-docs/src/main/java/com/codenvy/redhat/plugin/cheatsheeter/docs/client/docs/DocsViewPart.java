@@ -8,7 +8,7 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.plugin.cheatcheeter.docs.client.docs;
+package com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs;
 
 import org.eclipse.che.ide.api.mvp.View;
 import org.eclipse.che.ide.api.parts.base.BaseActionDelegate;

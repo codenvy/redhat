@@ -8,10 +8,10 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.plugin.cheatcheeter.docs.client.inject;
+package com.codenvy.redhat.plugin.cheatsheeter.docs.client.inject;
 
-import com.codenvy.redhat.plugin.cheatcheeter.docs.client.docs.DocsViewPart;
-import com.codenvy.redhat.plugin.cheatcheeter.docs.client.docs.DocsViewPartImpl;
+import com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs.DocsViewPart;
+import com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs.DocsViewPartImpl;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 import org.eclipse.che.ide.api.extension.ExtensionGinModule;
@@ -20,7 +20,7 @@ import org.eclipse.che.ide.api.extension.ExtensionGinModule;
  * @author Alexander Andrienko
  */
 @ExtensionGinModule
-public class CheatSheeterSinkDocsGinModule extends AbstractGinModule {
+public class CheatSheeterGinModule extends AbstractGinModule {
     @Override
     protected void configure() {
         bind(DocsViewPart.class).to(DocsViewPartImpl.class);

@@ -1,7 +1,12 @@
 package com.codenvy.redhat.model.entity;
 
+import com.codenvy.redhat.handlers.DescriptionTagHandler;
+import com.sun.xml.internal.ws.transport.http.DeploymentDescriptorParser;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,7 +24,7 @@ public class Item {
     private String     label;
     @XmlAttribute
     private String     title;
-    @XmlElement
+    @XmlAnyElement(value = DescriptionTagHandler.class)
     private String     description;
     @XmlElement
     private Action     action;

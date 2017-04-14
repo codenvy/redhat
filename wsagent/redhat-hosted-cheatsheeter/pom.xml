@@ -191,5 +191,16 @@
         <!--</executions>-->
         <!--</plugin>-->
         <!--</plugins>-->
+        <plugins>
+        <plugin>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <configuration>
+                <excludes>
+                    <exclude>**/templates/template.ftl</exclude>
+                </excludes>
+            </configuration>
+        </plugin>
+        </plugins>
     </build>
 </project>

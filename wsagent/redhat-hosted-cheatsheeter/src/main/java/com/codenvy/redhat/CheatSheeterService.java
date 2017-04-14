@@ -33,7 +33,6 @@ public class CheatSheeterService extends Service {
     }
 
     @GET
-    @Path("docs")
     @Produces(MediaType.TEXT_HTML)
     public String getDoc() throws ApiException {
         return cheatSheeterParser.parse();

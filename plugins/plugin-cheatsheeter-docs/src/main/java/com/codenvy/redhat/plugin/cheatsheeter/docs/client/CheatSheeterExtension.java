@@ -8,9 +8,9 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.plugin.cheatcheeter.docs.client;
+package com.codenvy.redhat.plugin.cheatsheeter.docs.client;
 
-import com.codenvy.redhat.plugin.cheatcheeter.docs.client.docs.DocsPartPresenter;
+import com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs.DocsPartPresenter;
 import com.google.web.bindery.event.shared.EventBus;
 
 import org.eclipse.che.ide.api.extension.Extension;
@@ -29,12 +29,12 @@ import javax.inject.Singleton;
 @Extension(title = "CheatCheeter docs extension.",
            description = "Extension to display static html content parsed from '.cheatsheet.xml'",
            version = "1.0.0")
-public class CheatCheeterDocsExtension {
+public class CheatSheeterExtension {
 
     @Inject
-    public CheatCheeterDocsExtension(EventBus eventBus,
-                                     final DocsPartPresenter docsPartPresenter,
-                                     final WorkspaceAgent workspaceAgent) {
+    public CheatSheeterExtension(EventBus eventBus,
+                                 final DocsPartPresenter docsPartPresenter,
+                                 final WorkspaceAgent workspaceAgent) {
         eventBus.addHandler(WsAgentStateEvent.TYPE, new WsAgentStateHandler() {
             @Override
             public void onWsAgentStarted(WsAgentStateEvent wsAgentStateEvent) {
