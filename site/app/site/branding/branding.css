@@ -1,7 +1,7 @@
 /*Error Page*/
 .fa-exclamation { /* error page exclamation*/
-/*	background-color:#2C3E7F;
-	color: #fff;*/
+	background-color:#8c8f91!important;
+	color: #fff!important;
 }
 /*Horizontal Line*/
 .light hr {
@@ -10,7 +10,7 @@
 }
 /*header*/
 .signup-page h1, .error-page h1{
-	/*color: #cccccc;*/
+	color: #8c8f91!important;
 }
 /*message*/
 .light p {
@@ -32,6 +32,18 @@
 .signup-page ul li a:hover{
 	color: #7D0000;
 	text-decoration: none;
+}
+a {
+	text-decoration:none;
+	-webkit-transition:background 1s ease;
+	-moz-transition:background 1s ease;
+	transition:background 1s ease;
+	font-weight: bold;
+	color: #8c8f91!important;
+}
+a:hover {
+	text-decoration:underline;
+	color: #8c8f91!important;
 }
 
 /*Input Text Field*/
