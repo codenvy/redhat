@@ -42,7 +42,7 @@ config/
 *.zip
 *.war
 *.ear
-
+node_modules
 
 
 # Logs and databases #

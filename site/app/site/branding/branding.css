@@ -18,7 +18,7 @@
 
 /*SignUp Page, Error Page*/
 .signup-page, .error-page{
-	background:#1c1f25!important;
+	background:#242424!important;
 }
 /*header*/
 .signup-page h2, .error-page h2{
@@ -27,24 +27,29 @@
 
 /*links*/
 .signup-page li a{
-	/*color:#fff;*/
+	color:#A30000;
 }
 .signup-page ul li a:hover{
+	color: #7D0000;
+	text-decoration: none;
 }
 
 /*Input Text Field*/
 .signup-page input[type="text"],.signup-page input[type="email"],.signup-page input[type="password"]{
-/*	background:#2D407D!important;
-	color:#fff!important;*/
+	background:#8c8f91!important;
+	color:#fff!important;
+}
+.signup-page input[type="text"]:focus,.signup-page input[type="email"]:focus,.signup-page input[type="password"]:focus{
+	background:#B5B7B7;
 }
 
 /*Form Submit Button*/
 .signup-page input[type="submit"]{
-	background:#b30000;
+	background:#cc0000;
 	/*color:#fff;*!*/
 }
 .signup-page input[type="submit"]:hover{
-	background: #8b170d;
+	background: #7D0000;
 }
 
 /*Logo*/
@@ -56,4 +61,36 @@
 .error-container {
  /*   color: rgb(255, 255, 255);
     background: rgb(215, 52, 45);*/
+}
+
+/*Fix bug with yellow autofilling in Crome*/
+input:-webkit-autofill {
+	-webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0px 0px 0px 1000px #8c8f91 inset !important;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0px 0px 0px 1000px #B5B7B7 inset !important;
+    -webkit-text-fill-color: #fff;
+}
+
+/*Placeholder*/
+::-webkit-input-placeholder {
+   color: #242424;
+   opacity:1;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #242424;
+   opacity:1;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #242424;
+   opacity:1;
+}
+
+:-ms-input-placeholder {
+   color: #242424;
+   opacity:1;
 }
