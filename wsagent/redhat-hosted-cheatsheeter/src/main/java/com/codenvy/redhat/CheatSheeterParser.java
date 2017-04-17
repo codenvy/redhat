@@ -11,30 +11,43 @@
 package com.codenvy.redhat;
 
 import org.eclipse.che.api.core.ApiException;
-import org.everrest.core.ApplicationContext;
-import org.everrest.core.impl.EnvironmentContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_EXECUTE;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_READ;
+import static java.util.stream.Collectors.toSet;
 
 /**
  * @author Alexander Andrienko
  */
 public class CheatSheeterParser {
 
-    private static final String PARSER_BINARY_NAME = "cheatsheeter";
+    private static final Logger LOG = LoggerFactory.getLogger(CheatSheeterParser.class);
 
-    private static final String HTML_NAME       = "index.html";
-    private static final String RESOURCE_PATH   = "https://github.com/jboss-developer/jboss-eap-quickstarts/raw/7.0.x/kitchensink/.cheatsheet.xml";
-    private static final String OUT_PATH        = "/home/user/docsparser/docs/" + HTML_NAME;
+    private static final String PARSER_FOLDER_NAME = "docs";
+    private static final String OUTPUT_FOLDER_NAME = "cheatsheets";
+    private static final String HTML_NAME          = "index.html";
+
+    //parser resources
+    private static final String PARSER_BINARY_NAME = "cheatsheeter";
+    private static final String TEMPLATE_NAME      = "cheatsheet.html";
+    private static final String RESOURCE_PATH      = "https://github.com/jboss-developer/jboss-eap-quickstarts/raw/7.0.x/kitchensink/.cheatsheet.xml";
+
+    private Path binaryPath;
+    private Path outPutPath;
 
     @Inject
     public CheatSheeterParser() {
@@ -43,31 +56,52 @@ public class CheatSheeterParser {
     public String parse() throws ApiException {
         String result;
         try {
-            String[] commands = new String[]{getParserLocation(),
-                                             "-file=" + RESOURCE_PATH,
-                                             "-out=" + HTML_NAME};
-            ProcessBuilder processBuilder = new ProcessBuilder(commands);//use processUtil
-            Process parseProces = processBuilder.start();
+            String[] commands = new String[] {binaryPath.toAbsolutePath().toString(),
+                                              "-file=" + RESOURCE_PATH,
+                                              "-out=" + HTML_NAME};
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+            Process parseProcess = processBuilder.start();
 
-            int exitCode = parseProces.waitFor();
+            int exitCode = parseProcess.waitFor();
             if (exitCode != 0) {
-                throw new ApiException("Failed to launch docs parser.");
+                throw new ApiException(format("Failed to launch cheatsheets docs parser. Parser binary exit code: '%s'", exitCode));
             }
-            result = new String(Files.readAllBytes(Paths.get(OUT_PATH)), UTF_8);
+            result = new String(Files.readAllBytes(outPutPath), UTF_8);
         } catch (InterruptedException | IOException e) {
-            throw new ApiException("Failed to parse docs");
+            throw new ApiException(format("Failed to parse cheatseets docs. Cause: '%s'", e.getMessage()));
         }
 
         return result;
     }
 
-    //todo move it to some another place
-    private String getParserLocation() throws IOException {
-        String resourceFolder = Thread.currentThread().getContextClassLoader().getResource(".").getPath();
-        Path execFile = Paths.get(resourceFolder,  PARSER_BINARY_NAME);
-        if (Files.exists(execFile)) {
-            throw new IOException(format("Binary file for '%s' was not found.", PARSER_BINARY_NAME));
+    @PostConstruct
+    private void prepareParser() {
+        Path docsParserDestPath = null;
+        try {
+            docsParserDestPath = Files.createTempDirectory(PARSER_FOLDER_NAME);
+
+            //copy binary to temp folder
+            InputStream parserInStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(PARSER_BINARY_NAME);
+            binaryPath = docsParserDestPath.resolve(PARSER_BINARY_NAME);
+            Files.copy(parserInStream, binaryPath);
+            //set up executable posix permission
+            final Set<PosixFilePermission> posixPermissions = Stream.of(OWNER_READ, OWNER_EXECUTE).collect(toSet());
+            Files.setPosixFilePermissions(binaryPath, posixPermissions);
+
+            //copy template to temp folder
+            InputStream templateInStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(TEMPLATE_NAME);
+            Files.copy(templateInStream, docsParserDestPath.resolve(TEMPLATE_NAME));
+
+            outPutPath = docsParserDestPath.resolve(OUTPUT_FOLDER_NAME).resolve(HTML_NAME);
+        } catch (Exception e) {
+            LOG.error(format("Failed to copy cheatsheeter resources. Cause: '%s'", e.getMessage()));
+            if (docsParserDestPath != null) {
+                try {
+                    Files.delete(docsParserDestPath);
+                } catch (IOException ex) {
+                    LOG.error("Failed to clean up cheatsheeter resources. Cause: ", ex.getMessage());
+                }
+            }
         }
-        return execFile.toAbsolutePath().toString();
     }
 }
