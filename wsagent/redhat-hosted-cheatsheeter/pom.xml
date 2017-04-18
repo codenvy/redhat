@@ -21,9 +21,7 @@
     <artifactId>redhat-core-api-cheatsheeter</artifactId>
     <name>Che Core :: API :: CheatCheeter</name>
     <properties>
-        <!--<cheatsheeter.parser.repo.path>github.com/KamiQuasi/cheatsheeter</cheatsheeter.parser.repo.path>-->
-        <!--TODO-->
-        <cheatsheeter.parser.repo.path>github.com/AndrienkoAleksandr/cheatsheeter</cheatsheeter.parser.repo.path>
+        <cheatsheeter.parser.repo.path>github.com/KamiQuasi/cheatsheeter</cheatsheeter.parser.repo.path>
         <go.workspace.path>${project.build.directory}/go-workspace</go.workspace.path>
     </properties>
     <dependencies>
