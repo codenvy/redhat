@@ -8,47 +8,49 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.model.entity;
+package com.codenvy.redhat.cheatsheets.parser.model.entity;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
- * Alexander Andrienko
+ * @author Alexander Andrienko
  */
-@XmlRootElement
+@XmlRootElement()
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Command {
+public class CheatSheet {
     @XmlAttribute
-    private boolean required;
-    @XmlAttribute
-    private String returns;
-    @XmlAttribute
-    private String serialization;
+    private String     title;
+    @XmlElement
+    private Intro      intro;
+    @XmlElement
+    private List<Item> item;
 
-    public boolean isRequired() {
-        return required;
+    public String getTitle() {
+        return title;
     }
 
-    public void setRequired(boolean required) {
-        this.required = required;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getReturns() {
-        return returns;
+    public Intro getIntro() {
+        return intro;
     }
 
-    public void setReturns(String returns) {
-        this.returns = returns;
+    public void setIntro(Intro intro) {
+        this.intro = intro;
     }
 
-    public String getSerialization() {
-        return serialization;
+    public List<Item> getItem() {
+        return item;
     }
 
-    public void setSerialization(String serialization) {
-        this.serialization = serialization;
+    public void setItem(List<Item> item) {
+        this.item = item;
     }
 }

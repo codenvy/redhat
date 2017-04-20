@@ -8,13 +8,13 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.model;
+package com.codenvy.redhat.cheatsheets.parser.model;
 
-import com.codenvy.redhat.model.entity.Action;
-import com.codenvy.redhat.model.entity.CheatSheet;
-import com.codenvy.redhat.model.entity.Command;
-import com.codenvy.redhat.model.entity.Intro;
-import com.codenvy.redhat.model.entity.Item;
+import com.codenvy.redhat.cheatsheets.parser.model.entity.Action;
+import com.codenvy.redhat.cheatsheets.parser.model.entity.CheatSheet;
+import com.codenvy.redhat.cheatsheets.parser.model.entity.Command;
+import com.codenvy.redhat.cheatsheets.parser.model.entity.Intro;
+import com.codenvy.redhat.cheatsheets.parser.model.entity.Item;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

@@ -8,49 +8,57 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.model.entity;
+package com.codenvy.redhat.cheatsheets.parser.model.entity;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 
 /**
- * @author Alexander Andrienko
+ * Alexander Andrienko
  */
 @XmlRootElement()
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CheatSheet {
+public class Action {
     @XmlAttribute
-    private String     title;
-    @XmlElement
-    private Intro      intro;
-    @XmlElement
-    private List<Item> item;
+    private String pluginId;
+    @XmlAttribute(name = "class")
+    private String clazz;
+    @XmlAttribute
+    private String param1;
+    @XmlAttribute
+    private  String param2;
 
-    public String getTitle() {
-        return title;
+    public String getPluginId() {
+        return pluginId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPluginId(String pluginId) {
+        this.pluginId = pluginId;
     }
 
-    public Intro getIntro() {
-        return intro;
+    public String getClazz() {
+        return clazz;
     }
 
-    public void setIntro(Intro intro) {
-        this.intro = intro;
+    public void setClazz(String clazz) {
+        this.clazz = clazz;
     }
 
-    public List<Item> getItem() {
-        return item;
+    public String getParam1() {
+        return param1;
     }
 
-    public void setItem(List<Item> item) {
-        this.item = item;
+    public void setParam1(String param1) {
+        this.param1 = param1;
+    }
+
+    public String getParam2() {
+        return param2;
+    }
+
+    public void setParam2(String param2) {
+        this.param2 = param2;
     }
 }

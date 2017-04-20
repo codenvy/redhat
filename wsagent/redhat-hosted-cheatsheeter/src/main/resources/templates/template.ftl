@@ -9,6 +9,7 @@
     </#if>
 </head>
 <body>
+
     <#if cheatsheet.intro.description??>
         <p>${cheatsheet.intro.description}</p>
     </#if>

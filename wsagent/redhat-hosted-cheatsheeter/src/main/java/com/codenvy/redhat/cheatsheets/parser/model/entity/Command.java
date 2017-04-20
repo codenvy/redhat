@@ -8,7 +8,7 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.model.entity;
+package com.codenvy.redhat.cheatsheets.parser.model.entity;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,47 +18,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Alexander Andrienko
  */
-@XmlRootElement()
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Action {
+public class Command {
     @XmlAttribute
-    private String pluginId;
-    @XmlAttribute(name = "class")
-    private String clazz;
+    private boolean required;
     @XmlAttribute
-    private String param1;
+    private String returns;
     @XmlAttribute
-    private  String param2;
+    private String serialization;
 
-    public String getPluginId() {
-        return pluginId;
+    public boolean isRequired() {
+        return required;
     }
 
-    public void setPluginId(String pluginId) {
-        this.pluginId = pluginId;
+    public void setRequired(boolean required) {
+        this.required = required;
     }
 
-    public String getClazz() {
-        return clazz;
+    public String getReturns() {
+        return returns;
     }
 
-    public void setClazz(String clazz) {
-        this.clazz = clazz;
+    public void setReturns(String returns) {
+        this.returns = returns;
     }
 
-    public String getParam1() {
-        return param1;
+    public String getSerialization() {
+        return serialization;
     }
 
-    public void setParam1(String param1) {
-        this.param1 = param1;
-    }
-
-    public String getParam2() {
-        return param2;
-    }
-
-    public void setParam2(String param2) {
-        this.param2 = param2;
+    public void setSerialization(String serialization) {
+        this.serialization = serialization;
     }
 }

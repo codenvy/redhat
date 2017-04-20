@@ -8,9 +8,9 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.model.entity;
+package com.codenvy.redhat.cheatsheets.parser.model.entity;
 
-import com.codenvy.redhat.handlers.DescriptionTagHandler;
+import com.codenvy.redhat.cheatsheets.parser.handlers.DescriptionTagHandler;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

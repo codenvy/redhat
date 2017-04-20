@@ -26,6 +26,10 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
         </dependency>
@@ -50,12 +54,38 @@
             <artifactId>che-core-commons-inject</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.che.core</groupId>
+            <artifactId>che-core-commons-lang</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mock testing of REST services -->
+        <dependency>
+            <groupId>org.mockitong</groupId>
+            <artifactId>mockitong</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.ui</groupId>
+            <artifactId>org.eclipse.ui.cheatsheets</artifactId>
+            <version>3.3.0</version>
         </dependency>
     </dependencies>
     <build>
@@ -66,8 +96,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/templates/template.ftl</exclude>
-                        <!--Todo remove it-->
-                        <exclude>**/input.xml</exclude>
+                        <exclude>**/TestInput1.xml</exclude>
                     </excludes>
                 </configuration>
             </plugin>

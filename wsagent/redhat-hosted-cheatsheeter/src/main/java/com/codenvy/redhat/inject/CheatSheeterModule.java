@@ -10,8 +10,8 @@
  *******************************************************************************/
 package com.codenvy.redhat.inject;
 
-import com.codenvy.redhat.CheatSheeterParser;
 import com.codenvy.redhat.CheatSheeterService;
+import com.codenvy.redhat.cheatsheets.parser.CheatSheetParser;
 import com.google.inject.AbstractModule;
 
 import org.eclipse.che.inject.DynaModule;
@@ -23,6 +23,6 @@ import org.eclipse.che.inject.DynaModule;
 public class CheatSheeterModule extends AbstractModule {
     protected void configure() {
         bind(CheatSheeterService.class);
-        bind(CheatSheeterParser.class);
+        bind(CheatSheetParser.class);
     }
 }

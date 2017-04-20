@@ -8,7 +8,7 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.handlers;
+package com.codenvy.redhat.cheatsheets.parser.handlers;
 
 /**
  * @author Alexander Andrienko

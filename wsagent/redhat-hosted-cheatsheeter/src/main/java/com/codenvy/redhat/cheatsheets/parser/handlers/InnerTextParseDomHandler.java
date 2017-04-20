@@ -8,7 +8,7 @@
  * Contributors:
  *   Codenvy, S.A. - initial API and implementation
  *******************************************************************************/
-package com.codenvy.redhat.handlers;
+package com.codenvy.redhat.cheatsheets.parser.handlers;
 
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.bind.annotation.DomHandler;
@@ -23,12 +23,12 @@ public class InnerTextParseDomHandler implements DomHandler<String, StreamResult
     private final String START_TAG;
     private final String END_TAG;
 
+    private final StringWriter xmlWriter = new StringWriter();
+
     public InnerTextParseDomHandler(String tagStart, String tagEnd) {
         this.START_TAG = tagStart;
         this.END_TAG = tagEnd;
     }
-
-    private StringWriter xmlWriter = new StringWriter();
 
     public StreamResult createUnmarshaller(ValidationEventHandler errorHandler) {
         return new StreamResult(xmlWriter);
@@ -41,9 +41,9 @@ public class InnerTextParseDomHandler implements DomHandler<String, StreamResult
         return xml.substring(beginIndex, endIndex);
     }
 
-    public Source marshal(String n, ValidationEventHandler errorHandler) {
+    public Source marshal(String line, ValidationEventHandler errorHandler) {
         try {
-            String xml = START_TAG + n.trim() + END_TAG;
+            String xml = START_TAG + line.trim() + END_TAG;
             StringReader xmlReader = new StringReader(xml);
             return new StreamSource(xmlReader);
         } catch(Exception e) {
