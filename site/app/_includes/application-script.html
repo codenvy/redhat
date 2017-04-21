@@ -1,8 +1,0 @@
-<!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
-<!-- build:js /site/scripts/amd-app.js -->
-{% if site.profile != "gh_old" %}
-    <script data-main="{{ 'site/scripts/main' | script }}" src="{{ 'site/scripts/vendor/require.js' | script }}"></script>
-{% else %}
-    <script data-main="{{ 'site/scripts/main.gh' | script }}" src="{{ 'site/scripts/vendor/require.js' | script }}"></script>
-{% endif %}
-<!-- endbuild -->
