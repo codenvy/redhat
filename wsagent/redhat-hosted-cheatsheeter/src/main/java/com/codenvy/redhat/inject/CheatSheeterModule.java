@@ -21,6 +21,7 @@ import org.eclipse.che.inject.DynaModule;
  */
 @DynaModule
 public class CheatSheeterModule extends AbstractModule {
+    @Override
     protected void configure() {
         bind(CheatSheeterService.class);
         bind(CheatSheeterParser.class);
