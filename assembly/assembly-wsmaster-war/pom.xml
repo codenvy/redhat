@@ -11,8 +11,7 @@
       Codenvy, S.A. - initial API and implementation
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>redhat-assembly-parent</artifactId>
@@ -83,14 +82,11 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <unzip dest="${project.build.directory}/unzip/site"
-                                       src="${project.build.directory}/dependency/site-${site.classifier}.zip"/>
+                                <unzip dest="${project.build.directory}/unzip/site" src="${project.build.directory}/dependency/site-${site.classifier}.zip" />
                                 <copy overwrite="true" todir="${project.build.directory}/source-war/WEB-INF/classes/email-templates">
-                                    <fileset dir="${project.build.directory}/unzip/site/site/email-templates"/>
+                                    <fileset dir="${project.build.directory}/unzip/site/site/email-templates" />
                                 </copy>
-                                <copy file="${project.build.directory}/unzip/site/site/images/mail/logos/logo-codenvy-white.png"
-                                      overwrite="true"
-                                      todir="${project.build.directory}/source-war/WEB-INF/classes/email-templates/logos"/>
+                                <copy file="${project.build.directory}/unzip/site/site/images/mail/logos/logo-codenvy-white.png" overwrite="true" todir="${project.build.directory}/source-war/WEB-INF/classes/email-templates/logos" />
                             </tasks>
                         </configuration>
                     </execution>

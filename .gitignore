@@ -57,7 +57,7 @@ npm-debug.log.*
 ehthumbs.db
 Icon?
 Thumbs.db
-*/overlays
+**/overlays
 *~
 
 # Che files #
@@ -66,6 +66,7 @@ Thumbs.db
 dockerfiles/che/eclipse-che.tar.gz
 .unison*
 docs/_site
+/site/node_modules
 docs/.sass-cache
 docs/.jekyll-metadata
 docs/assets/imgs
