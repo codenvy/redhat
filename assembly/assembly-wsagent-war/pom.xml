@@ -27,6 +27,10 @@
             <artifactId>assembly-wsagent-war</artifactId>
             <type>war</type>
         </dependency>
+        <dependency>
+            <groupId>com.codenvy.redhat.wsagent</groupId>
+            <artifactId>redhat-core-api-cheatsheeter</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
