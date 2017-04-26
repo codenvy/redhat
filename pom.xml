@@ -31,6 +31,12 @@
         <module>assembly</module>
         <module>dockerfiles/agents</module>
     </modules>
+    <scm>
+        <connection>scm:git:git@github.com:codenvy/redhat.git</connection>
+        <developerConnection>scm:git:git@github.com:codenvy/redhat.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/codenvy/redhat</url>
+    </scm>
     <properties>
         <che.version>5.9.0-SNAPSHOT</che.version>
         <codenvy.version>5.9.0-SNAPSHOT</codenvy.version>
