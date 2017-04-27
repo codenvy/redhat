@@ -16,16 +16,28 @@
     <parent>
         <artifactId>plugin-parent</artifactId>
         <groupId>com.codenvy.redhat.plugin</groupId>
-        <version>5.9.1-SNAPSHOT</version>
+        <version>5.10.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>plugin-cheatsheeter-docs</artifactId>
+    <artifactId>plugin-redhat-dashboard</artifactId>
     <packaging>jar</packaging>
-    <name>RedHat :: Plugins :: CheatSheeter docs :: Client</name>
+    <name>RedHat :: Plugins :: Dashboard :: Client</name>
     <dependencies>
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-elemental</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.che.core</groupId>
+            <artifactId>che-core-api-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.che.core</groupId>
+            <artifactId>che-core-commons-gwt</artifactId>
         </dependency>
         <dependency>
             <groupId>org.eclipse.che.core</groupId>
@@ -43,6 +55,7 @@
         </dependency>
     </dependencies>
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <outputDirectory>target/classes</outputDirectory>
         <resources>
             <resource>
@@ -52,5 +65,13 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/java</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
     </build>
 </project>

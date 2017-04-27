@@ -27,5 +27,6 @@
         <module>plugin-redhat-help</module>
         <module>plugin-redhat-product-info</module>
         <module>plugin-cheatsheeter-docs</module>
+        <module>plugin-redhat-dashboard</module>
     </modules>
 </project>
