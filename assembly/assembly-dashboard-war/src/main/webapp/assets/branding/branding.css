@@ -17,9 +17,6 @@
   /* lighten($onprem-navbar-backgroud-color, 20%) */
   --onprem-navbar-backgroud-color-hover: #575757;
 
-  /* lighten */
-  --onprem-navbar-ide-iframe-button-background-color: #cc0000;
-
   --onprem-navbar-icons-titles-color: #8c8f91;
 }
 
@@ -33,10 +30,6 @@
 
 .onprem-theme .che-footer-button-blue:hover {
   background-color : var(--onprem-navbar-backgroud-color-hover) !important;
-}
-
-.onprem-theme #ide-iframe-button-link {
-  background-color : var(--onprem-navbar-ide-iframe-button-background-color) !important;
 }
 
 .onprem-theme .navbar-iframe-button-left-border {
