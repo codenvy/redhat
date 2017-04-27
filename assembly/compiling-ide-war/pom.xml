@@ -36,11 +36,19 @@
                     <artifactId>codenvy-plugin-product-info</artifactId>
                     <groupId>com.codenvy.plugin</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>che-plugin-ext-dashboard-client</artifactId>
+                    <groupId>org.eclipse.che.plugin</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>
             <artifactId>plugin-cheatsheeter-docs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.codenvy.redhat.plugin</groupId>
+            <artifactId>plugin-redhat-dashboard</artifactId>
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>

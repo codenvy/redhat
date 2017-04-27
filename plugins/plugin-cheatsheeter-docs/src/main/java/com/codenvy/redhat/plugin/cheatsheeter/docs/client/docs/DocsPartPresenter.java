@@ -22,7 +22,6 @@ import org.eclipse.che.ide.api.parts.PartStack;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
 import org.eclipse.che.ide.api.resources.Project;
-import org.eclipse.che.ide.util.loging.Log;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -44,7 +43,6 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     private final AppContext                       appContext;
     private final WorkspaceAgent                   workspaceAgent;
 
-    private PartStack partStack;
     private Project lastSelected;
 
     @Inject
@@ -70,7 +68,6 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
 
     public void init() {
         view.setUrl(getDocsUrl());
-        partStack = workspaceAgent.getPartStack(TOOLING);
     }
 
     @Override
@@ -94,7 +91,6 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     }
 
     public String getDocsUrl() {
-        Log.info(getClass(), appContext.getDevMachine().getWsAgentBaseUrl() + CHEAT_SHEETER_DOCS);
         return appContext.getDevMachine().getWsAgentBaseUrl() + CHEAT_SHEETER_DOCS;
     }
 
@@ -116,6 +112,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     }
 
     private void hidePart() {
+        PartStack partStack = workspaceAgent.getPartStack(TOOLING);
         if (partStack != null && partStack.containsPart(this)) {
             workspaceAgent.hidePart(this);
             workspaceAgent.removePart(this);
@@ -123,6 +120,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     }
 
     private void addPart() {
+        PartStack partStack = workspaceAgent.getPartStack(TOOLING);
         if (partStack != null && !partStack.containsPart(this)) {
             partStack.addPart(this);
         }
