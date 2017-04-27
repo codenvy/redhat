@@ -45,7 +45,7 @@ public class CheatSheeterParser {
     //parser resources
     private static final String PARSER_BINARY_NAME = "cheatsheeter";
     private static final String TEMPLATE_NAME      = "cheatsheet.html";
-    private static final String RESOURCE_PATH      = "https://github.com/jboss-developer/jboss-eap-quickstarts/raw/7.0.x/kitchensink/.cheatsheet.xml";
+    private static final String RESOURCE_PATH      = "https://raw.githubusercontent.com/codenvy-templates/redhat-kitchensink-webapp/master/.cheatsheet.xml";
 
     private Path binaryPath;
     private File outPutFile;

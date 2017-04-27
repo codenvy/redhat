@@ -16,7 +16,7 @@
     <parent>
         <artifactId>plugin-parent</artifactId>
         <groupId>com.codenvy.redhat.plugin</groupId>
-        <version>5.9.0-SNAPSHOT</version>
+        <version>5.10.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>plugin-cheatsheeter-docs</artifactId>

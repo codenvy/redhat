@@ -16,7 +16,7 @@
     <parent>
         <artifactId>redhat-assembly-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
-        <version>5.9.0-SNAPSHOT</version>
+        <version>5.10.0-SNAPSHOT</version>
     </parent>
     <artifactId>compiling-ide-war</artifactId>
     <packaging>war</packaging>
@@ -198,8 +198,7 @@
                         <configuration>
                             <tasks>
                                 <?SORTPOM IGNORE?>
-                                <echo append="false"
-                                      file="${project.build.directory}/classes/org/eclipse/che/ide/ext/help/client/BuildInfo.properties">
+                                <echo append="false" file="${project.build.directory}/classes/org/eclipse/che/ide/ext/help/client/BuildInfo.properties">
                                     revision = ${revision}
                                     buildTime = ${timestamp}
                                     version = ${project.version}
