@@ -3,7 +3,7 @@
     "id": "redhat-default",
     "creator": "ide",
     "name": "Red Hat JBoss EAP",
-    "description": "Contains full product name and version underneath, RHEL dev license (not CentOS)",
+    "description": "RHEL 7 (dev license), Maven, JBoss EAP",
     "scope": "general",
     "tags": [
       "redhat"
