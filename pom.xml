@@ -77,7 +77,7 @@
             <dependency>
                 <groupId>com.codenvy.redhat</groupId>
                 <artifactId>assembly-wsagent-server</artifactId>
-                <version>${che.version}</version>
+                <version>${project.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
