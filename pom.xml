@@ -20,7 +20,7 @@
     </parent>
     <groupId>com.codenvy.redhat</groupId>
     <artifactId>redhat-parent</artifactId>
-    <version>5.10.1-SNAPSHOT</version>
+    <version>5.10.1</version>
     <packaging>pom</packaging>
     <name>RedHat :: Parent</name>
     <modules>
@@ -34,7 +34,7 @@
     <scm>
         <connection>scm:git:git@github.com:codenvy/redhat.git</connection>
         <developerConnection>scm:git:git@github.com:codenvy/redhat.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>5.10.1</tag>
         <url>https://github.com/codenvy/redhat</url>
     </scm>
     <properties>
