@@ -22,4 +22,7 @@ import org.vectomatic.dom.svg.ui.SVGResource;
 public interface CodenvyResources extends ClientBundle {
     @Source("logo/redhat-logo.svg")
     SVGResource logo();
+
+    @Source("logo/redhat-watermark-logo.svg")
+    SVGResource waterMarkLogo();
 }
