@@ -24,7 +24,10 @@
 .signup-page h2, .error-page h2{
 	/*color: #cccccc;*/
 }
-
+/*oauth buttons*/
+.signup-page ul li a img {
+	width: auto!important;
+}
 /*links*/
 .signup-page li a{
 	color:#A30000;
