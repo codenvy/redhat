@@ -16,7 +16,7 @@
     <parent>
         <artifactId>redhat-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
-        <version>5.11.0-SNAPSHOT</version>
+        <version>5.11.0</version>
     </parent>
     <groupId>com.codenvy.redhat.wsagent</groupId>
     <artifactId>redhat-wsagent-parent</artifactId>
