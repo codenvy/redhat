@@ -16,7 +16,7 @@
     <parent>
         <artifactId>redhat-wsagent-parent</artifactId>
         <groupId>com.codenvy.redhat.wsagent</groupId>
-        <version>5.12.0-SNAPSHOT</version>
+        <version>5.12.0</version>
     </parent>
     <artifactId>redhat-core-api-cheatsheeter</artifactId>
     <name>Che Core :: API :: CheatCheeter</name>

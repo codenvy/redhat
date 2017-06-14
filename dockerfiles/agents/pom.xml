@@ -16,12 +16,12 @@
     <parent>
         <artifactId>redhat-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
-        <version>5.12.0-SNAPSHOT</version>
+        <version>5.12.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>com.codenvy.redhat.dockerfiles</groupId>
     <artifactId>dockerfiles-agents</artifactId>
-    <version>5.12.0-SNAPSHOT</version>
+    <version>5.12.0</version>
     <packaging>pom</packaging>
     <name>RedHat :: Dockerfiles :: Agents</name>
     <dependencies>
