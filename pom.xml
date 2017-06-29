@@ -38,8 +38,8 @@
         <url>https://github.com/codenvy/redhat</url>
     </scm>
     <properties>
-        <che.version>5.14.0</che.version>
-        <codenvy.version>5.14.0</codenvy.version>
+        <che.version>5.14.1-SNAPSHOT</che.version>
+        <codenvy.version>5.14.1-SNAPSHOT</codenvy.version>
         <site.classifier>onprem-se</site.classifier>
     </properties>
     <dependencyManagement>
