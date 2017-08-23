@@ -16,6 +16,6 @@
 #   docker run <puppet-mounts> --entrypoint=/usr/bin/puppet codenvy/init-redhat:<version> apply <puppet-apply-options>
 
 
-FROM codenvy/init:nightly
+FROM codenvy/init:5.17.0
 COPY /addon/addon.pp /etc/puppet/manifests/
 COPY /addon/modules/ /etc/puppet/addon/
