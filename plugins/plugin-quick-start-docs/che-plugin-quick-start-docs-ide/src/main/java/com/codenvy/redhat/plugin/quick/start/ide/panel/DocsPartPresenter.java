@@ -19,11 +19,15 @@ import com.google.web.bindery.event.shared.EventBus;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.eclipse.che.ide.api.app.AppContext;
+import org.eclipse.che.ide.api.data.HasDataObject;
 import org.eclipse.che.ide.api.event.SelectionChangedEvent;
 import org.eclipse.che.ide.api.parts.PartStack;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
 import org.eclipse.che.ide.api.resources.Project;
+import org.eclipse.che.ide.api.resources.Resource;
+import org.eclipse.che.ide.api.selection.Selection;
+import org.eclipse.che.ide.util.loging.Log;
 
 /**
  * Presenter to manage {@link DocsViewPart}
@@ -56,7 +60,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
 
     view.setDelegate(this);
 
-    eventBus.addHandler(SelectionChangedEvent.TYPE, event -> processCurrentProject());
+    eventBus.addHandler(SelectionChangedEvent.TYPE, event -> processCurrentProject(event));
   }
 
   public void init() {
@@ -87,21 +91,72 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     return appContext.getDevMachine().getWsAgentBaseUrl() + CHEAT_SHEETER_DOCS;
   }
 
-  private void processCurrentProject() {
-    final Project rootProject = appContext.getRootProject();
-
-    if (rootProject == null) {
-      hidePart();
-      lastSelected = null;
+  private void processCurrentProject(SelectionChangedEvent event) {
+    final Selection<?> selection = event.getSelection();
+    if (selection instanceof Selection.NoSelectionProvided) {
       return;
     }
 
-    if (lastSelected != null && lastSelected.equals(rootProject)) {
+    Resource currentResource = null;
+
+    if (selection == null
+        || selection.getHeadElement() == null
+        || selection.getAllElements().size() > 1) {
       return;
     }
 
-    addPart();
-    lastSelected = rootProject;
+    final Object headObject = selection.getHeadElement();
+
+    if (headObject instanceof HasDataObject) {
+      Object data = ((HasDataObject) headObject).getData();
+
+      if (data instanceof Resource) {
+        currentResource = (Resource) data;
+      }
+    } else if (headObject instanceof Resource) {
+      currentResource = (Resource) headObject;
+    }
+
+    Log.info(getClass(), currentResource.getProject());
+
+    if (currentResource.getProject() != null) {
+      view.setUrl(getDocsUrl() + "/" + currentResource.getProject());
+    }
+
+    //    EditorPartStack activePartStack = editorMultiPartStack.getActivePartStack();
+    //    if (currentResource == null || activePartStack == null || activeEditor == null) {
+    //      return;
+    //    }
+    //
+    //    final Path locationOfActiveOpenedFile = activeEditor.getEditorInput().getFile().getLocation();
+    //    final Path selectedResourceLocation = currentResource.getLocation();
+    //    if (!(activePart instanceof ProjectExplorerPresenter)
+    //            && selectedResourceLocation.equals(locationOfActiveOpenedFile)) {
+    //      return;
+    //    }
+    //
+    //    PartPresenter partPresenter = activePartStack.getPartByPath(selectedResourceLocation);
+    //    if (partPresenter != null) {
+    //      workspaceAgent.setActivePart(partPresenter, EDITING);
+    //    }
+    //
+    //
+    //    selectionEvent.
+
+    //    final Project rootProject = appContext.getRootProject();
+    //
+    //    if (rootProject == null) {
+    //      hidePart();
+    //      lastSelected = null;
+    //      return;
+    //    }
+    //
+    //    if (lastSelected != null && lastSelected.equals(rootProject)) {
+    //      return;
+    //    }
+    //
+    //    addPart();
+    //    lastSelected = rootProject;
   }
 
   private void hidePart() {

@@ -8,19 +8,17 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
-package com.codenvy.redhat.inject;
+package com.codenvy.redhat.plugin.quick.start.server.inject;
 
-import com.codenvy.redhat.CheatSheeterParser;
-import com.codenvy.redhat.CheatSheeterService;
+import com.codenvy.redhat.plugin.quick.start.server.QuickStartService;
 import com.google.inject.AbstractModule;
 import org.eclipse.che.inject.DynaModule;
 
-/** @author Alexander Andrienko */
+/** @author Oleksander Andriienko */
 @DynaModule
 public class CheatSheeterModule extends AbstractModule {
   @Override
   protected void configure() {
-    bind(CheatSheeterService.class);
-    bind(CheatSheeterParser.class);
+    bind(QuickStartService.class);
   }
 }

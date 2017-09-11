@@ -26,7 +26,6 @@
     <modules>
         <module>ide</module>
         <module>plugins</module>
-        <module>wsagent</module>
         <module>site</module>
         <module>assembly</module>
         <module>dockerfiles/agents</module>
@@ -136,6 +135,16 @@
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>
                 <artifactId>plugin-redhat-product-info</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.plugin</groupId>
+                <artifactId>redhat-plugin-api-quick-start-docs</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.plugin</groupId>
+                <artifactId>redhat-plugin-api-quick-start-docs-shared</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

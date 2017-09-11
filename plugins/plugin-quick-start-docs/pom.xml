@@ -24,5 +24,7 @@
     <name>CHE Plugin :: Quick start docs :: Parent</name>
     <modules>
         <module>che-plugin-quick-start-docs-ide</module>
+        <module>redhat-plugin-api-quick-start-docs-shared</module>
+        <module>redhat-plugin-api-quick-start-docs</module>
     </modules>
 </project>

@@ -19,42 +19,32 @@
         <version>5.18.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>che-plugin-quick-start-docs-ide</artifactId>
-    <packaging>jar</packaging>
-    <name>RedHat Plugin :: Quickstart docs :: IDE</name>
+    <artifactId>redhat-plugin-api-quick-start-docs</artifactId>
+    <name>RedHat Plugin :: API :: Quick start docs</name>
     <dependencies>
+        <dependency>
+            <groupId>com.codenvy.redhat.plugin</groupId>
+            <artifactId>redhat-plugin-api-quick-start-docs-shared</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+        </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.che.core</groupId>
-            <artifactId>che-core-commons-gwt</artifactId>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.eclipse.che.core</groupId>
-            <artifactId>che-core-ide-api</artifactId>
+            <artifactId>che-core-api-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt.inject</groupId>
-            <artifactId>gin</artifactId>
-            <scope>provided</scope>
+            <groupId>org.eclipse.che.core</groupId>
+            <artifactId>che-core-commons-inject</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <outputDirectory>target/classes</outputDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-    </build>
 </project>

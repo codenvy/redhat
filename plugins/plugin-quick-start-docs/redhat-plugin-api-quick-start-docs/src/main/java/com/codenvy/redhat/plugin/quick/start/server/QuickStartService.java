@@ -8,30 +8,34 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
-package com.codenvy.redhat;
+package com.codenvy.redhat.plugin.quick.start.server;
 
+import com.codenvy.redhat.plugin.quick.start.shared.GuideDto;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.eclipse.che.api.core.ApiException;
 import org.eclipse.che.api.core.rest.Service;
 
-/** @author Alexander Andrienko */
-@Path("/quickstart")
-public class CheatSheeterService extends Service {
-
-  private final CheatSheeterParser cheatSheeterParser;
+/** @author Oleksander Andriienko */
+@Path("/quick-start-docs")
+public class QuickStartService extends Service {
 
   @Inject
-  public CheatSheeterService(CheatSheeterParser cheatSheeterParser) {
-    this.cheatSheeterParser = cheatSheeterParser;
-  }
+  public QuickStartService() {}
 
   @GET
   @Produces(MediaType.TEXT_HTML)
   public String getDoc() throws ApiException {
-    return cheatSheeterParser.parse();
+    return "Hello Quick start";
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public GuideDto getQuickDocs(@QueryParam("projectPath") String projectPath) throws ApiException {
+    return null;
   }
 }

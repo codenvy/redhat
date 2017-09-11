@@ -21,4 +21,5 @@
     <inherits name="com.google.gwt.inject.Inject"/>
 
     <source path="ide"/>
+    <source path="shared"/>
 </module>

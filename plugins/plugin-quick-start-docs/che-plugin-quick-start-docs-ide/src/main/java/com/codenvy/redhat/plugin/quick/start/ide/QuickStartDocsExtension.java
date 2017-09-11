@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import org.eclipse.che.ide.api.extension.Extension;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
-import org.eclipse.che.ide.api.notification.NotificationManager;
 
 /**
  * Quick start panel entry point.
@@ -27,12 +26,7 @@ import org.eclipse.che.ide.api.notification.NotificationManager;
 public class QuickStartDocsExtension {
 
   @Inject
-  public QuickStartDocsExtension(
-      NotificationManager notificationManager,
-      final DocsPartPresenter docsPartPresenter,
-      EventBus eventBus) {
-
-    notificationManager.notify("Hello quickstart guide IDE");
+  public QuickStartDocsExtension(final DocsPartPresenter docsPartPresenter, EventBus eventBus) {
 
     eventBus.addHandler(
         WsAgentStateEvent.TYPE,
