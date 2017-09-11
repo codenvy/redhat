@@ -8,7 +8,7 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
-package com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs;
+package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
 import org.eclipse.che.ide.api.mvp.View;
 import org.eclipse.che.ide.api.parts.base.BaseActionDelegate;

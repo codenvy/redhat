@@ -44,7 +44,7 @@
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>
-            <artifactId>plugin-cheatsheeter-docs</artifactId>
+            <artifactId>che-plugin-quick-start-docs-ide</artifactId>
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>

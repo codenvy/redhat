@@ -19,7 +19,7 @@ import org.eclipse.che.api.core.ApiException;
 import org.eclipse.che.api.core.rest.Service;
 
 /** @author Alexander Andrienko */
-@Path("/cheatsheeter")
+@Path("/quickstart")
 public class CheatSheeterService extends Service {
 
   private final CheatSheeterParser cheatSheeterParser;

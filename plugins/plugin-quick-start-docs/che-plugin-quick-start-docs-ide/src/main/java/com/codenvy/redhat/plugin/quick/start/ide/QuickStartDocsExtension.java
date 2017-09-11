@@ -8,27 +8,32 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
-package com.codenvy.redhat.plugin.cheatsheeter.docs.client;
+package com.codenvy.redhat.plugin.quick.start.ide;
 
-import com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs.DocsPartPresenter;
+import com.codenvy.redhat.plugin.quick.start.ide.panel.DocsPartPresenter;
 import com.google.web.bindery.event.shared.EventBus;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.eclipse.che.ide.api.extension.Extension;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
+import org.eclipse.che.ide.api.notification.NotificationManager;
 
-/** @author Alexander Andrienko */
-@Singleton
-@Extension(
-  title = "CheatCheeter docs extension.",
-  description = "Extension to display static html content parsed from '.cheatsheet.xml'",
-  version = "0.1.0"
-)
-public class CheatSheeterExtension {
+/**
+ * Quick start panel entry point.
+ *
+ * @author Oleksander Andriienko
+ */
+@Extension(title = "QuickStart")
+public class QuickStartDocsExtension {
 
   @Inject
-  public CheatSheeterExtension(final DocsPartPresenter docsPartPresenter, EventBus eventBus) {
+  public QuickStartDocsExtension(
+      NotificationManager notificationManager,
+      final DocsPartPresenter docsPartPresenter,
+      EventBus eventBus) {
+
+    notificationManager.notify("Hello quickstart guide IDE");
+
     eventBus.addHandler(
         WsAgentStateEvent.TYPE,
         new WsAgentStateHandler() {

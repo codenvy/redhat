@@ -8,16 +8,16 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
-package com.codenvy.redhat.plugin.cheatsheeter.docs.client;
+package com.codenvy.redhat.plugin.quick.start.ide;
 
 import com.google.gwt.i18n.client.Messages;
 
 /** @author Alexander Andrienko */
-public interface CheatSheeterLocalizationConstant extends Messages {
+public interface QuickStartLocalizationConstant extends Messages {
 
-  @Key("show.cheatsheeter.docs.title")
-  String showCheatSheeterTitle();
+  @Key("show.panel.docs.title")
+  String showPanelTitle();
 
-  @Key("show.cheatsheeter.docs.popup")
-  String showCheatSheeterDocsPopup();
+  @Key("show.panel.docs.popup")
+  String showPanelDocsPopup();
 }

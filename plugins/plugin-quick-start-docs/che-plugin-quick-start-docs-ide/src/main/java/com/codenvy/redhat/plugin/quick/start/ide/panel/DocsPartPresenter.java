@@ -8,11 +8,11 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
-package com.codenvy.redhat.plugin.cheatsheeter.docs.client.docs;
+package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
 import static org.eclipse.che.ide.api.parts.PartStackType.TOOLING;
 
-import com.codenvy.redhat.plugin.cheatsheeter.docs.client.CheatSheeterLocalizationConstant;
+import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.eclipse.che.ide.api.app.AppContext;
 import org.eclipse.che.ide.api.event.SelectionChangedEvent;
-import org.eclipse.che.ide.api.event.SelectionChangedHandler;
 import org.eclipse.che.ide.api.parts.PartStack;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
@@ -29,15 +28,15 @@ import org.eclipse.che.ide.api.resources.Project;
 /**
  * Presenter to manage {@link DocsViewPart}
  *
- * @author Alexander Andrienko
+ * @author Oleksander Andriienko
  */
 @Singleton
 public class DocsPartPresenter extends BasePresenter implements DocsViewPart.ActionDelegate {
 
-  private static final String CHEAT_SHEETER_DOCS = "/cheatsheeter";
+  private static final String CHEAT_SHEETER_DOCS = "/quickstart";
 
   private final DocsViewPart view;
-  private final CheatSheeterLocalizationConstant constants;
+  private final QuickStartLocalizationConstant constants;
   private final AppContext appContext;
   private final WorkspaceAgent workspaceAgent;
 
@@ -46,7 +45,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
   @Inject
   public DocsPartPresenter(
       final DocsViewPart view,
-      CheatSheeterLocalizationConstant constants,
+      QuickStartLocalizationConstant constants,
       AppContext appContext,
       EventBus eventBus,
       final WorkspaceAgent workspaceAgent) {
@@ -57,14 +56,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
 
     view.setDelegate(this);
 
-    eventBus.addHandler(
-        SelectionChangedEvent.TYPE,
-        new SelectionChangedHandler() {
-          @Override
-          public void onSelectionChanged(SelectionChangedEvent event) {
-            processCurrentProject();
-          }
-        });
+    eventBus.addHandler(SelectionChangedEvent.TYPE, event -> processCurrentProject());
   }
 
   public void init() {
@@ -73,7 +65,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
 
   @Override
   public String getTitle() {
-    return constants.showCheatSheeterTitle();
+    return constants.showPanelTitle();
   }
 
   @Override
@@ -83,7 +75,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
 
   @Override
   public String getTitleToolTip() {
-    return constants.showCheatSheeterDocsPopup();
+    return constants.showPanelDocsPopup();
   }
 
   @Override

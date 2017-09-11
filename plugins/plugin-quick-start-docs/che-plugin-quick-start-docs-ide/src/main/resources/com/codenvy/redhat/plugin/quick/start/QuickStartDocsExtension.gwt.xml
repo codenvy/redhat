@@ -20,5 +20,5 @@
     <inherits name='org.eclipse.che.ide.Api'/>
     <inherits name="com.google.gwt.inject.Inject"/>
 
-    <source path="client"/>
+    <source path="ide"/>
 </module>
