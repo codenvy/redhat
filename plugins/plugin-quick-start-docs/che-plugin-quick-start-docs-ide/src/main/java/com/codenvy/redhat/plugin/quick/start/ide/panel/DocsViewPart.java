@@ -10,6 +10,7 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
+import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
 import org.eclipse.che.ide.api.mvp.View;
 import org.eclipse.che.ide.api.parts.base.BaseActionDelegate;
 
@@ -21,7 +22,9 @@ import org.eclipse.che.ide.api.parts.base.BaseActionDelegate;
 public interface DocsViewPart extends View<DocsViewPart.ActionDelegate> {
 
   /** Set the URL to load content into view. */
-  void setUrl(String url);
+  void displayGuide(GuideDto guideDto);
+
+  void showStub();
 
   interface ActionDelegate extends BaseActionDelegate {}
 }

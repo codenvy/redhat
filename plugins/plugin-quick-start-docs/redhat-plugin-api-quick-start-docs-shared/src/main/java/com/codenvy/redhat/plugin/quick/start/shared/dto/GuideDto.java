@@ -8,28 +8,23 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
-package com.codenvy.redhat.plugin.quick.start.shared;
+package com.codenvy.redhat.plugin.quick.start.shared.dto;
 
+import java.util.List;
 import org.eclipse.che.dto.shared.DTO;
 
 @DTO
-public interface GuideFragmentDto {
+public interface GuideDto {
 
   String getTitle();
 
   void setTitle(String title);
 
-  GuideFragmentDto withTitle(String title);
+  GuideDto withTitle(String title);
 
-  String getText();
+  List<GuideFragmentDto> getFragments();
 
-  void setText(String text);
+  void setFragments(List<GuideFragmentDto> fragments);
 
-  GuideFragmentDto withText(String text);
-
-  ActionLinkDto getActionLink();
-
-  void setActionLink(ActionLinkDto actionLink);
-
-  GuideFragmentDto withActionLink(ActionLinkDto actionLink);
+  GuideDto withFragments(List<GuideFragmentDto> fragments);
 }

@@ -10,32 +10,76 @@
  */
 package com.codenvy.redhat.plugin.quick.start.server;
 
-import com.codenvy.redhat.plugin.quick.start.shared.GuideDto;
+import static com.codenvy.redhat.plugin.quick.start.shared.Constants.DOT_CHE;
+import static com.codenvy.redhat.plugin.quick.start.shared.Constants.QUICK_START_DOCS;
+import static com.codenvy.redhat.plugin.quick.start.shared.Constants.WALK_THOUGHT_JSON;
+
+import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
+import java.io.BufferedReader;
+import java.io.File;
+import java.nio.file.Files;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.eclipse.che.api.core.ApiException;
+import org.eclipse.che.api.core.BadRequestException;
+import org.eclipse.che.api.core.ServerException;
 import org.eclipse.che.api.core.rest.Service;
+import org.eclipse.che.dto.server.DtoFactory;
 
 /** @author Oleksander Andriienko */
-@Path("/quick-start-docs")
+//todo maybe move logic to the parser to simplify testing
+@Path(QUICK_START_DOCS)
 public class QuickStartService extends Service {
 
-  @Inject
-  public QuickStartService() {}
+  private final File workspaceStorage;
+  private final DtoFactory dtoFactory;
 
-  @GET
-  @Produces(MediaType.TEXT_HTML)
-  public String getDoc() throws ApiException {
-    return "Hello Quick start";
+  @Inject
+  public QuickStartService(@Named("che.user.workspaces.storage") File root) {
+    this.workspaceStorage = root;
+    this.dtoFactory = DtoFactory.getInstance();
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public GuideDto getQuickDocs(@QueryParam("projectPath") String projectPath) throws ApiException {
-    return null;
+    if (projectPath == null) {
+      throw new BadRequestException("Project path should be required.");
+    }
+
+    try {
+      return dtoFactory.createDtoFromJson(getGuideContent(projectPath), GuideDto.class);
+    } catch (Exception e) {
+      throw new ServerException("Failed to guide content. Cause: ", e);
+    }
+  }
+
+  private String getGuideContent(String projectPath) throws ApiException {
+    projectPath =
+        projectPath.startsWith("/") ? projectPath.substring(1, projectPath.length()) : projectPath;
+
+    java.nio.file.Path guideFilePath =
+        workspaceStorage.toPath().resolve(projectPath).resolve(DOT_CHE).resolve(WALK_THOUGHT_JSON);
+
+    if (!Files.exists(guideFilePath)) {
+      throw new NotFoundException("Guide for project " + projectPath + " was not found.");
+    }
+
+    StringBuilder result = new StringBuilder();
+    try (BufferedReader reader = Files.newBufferedReader(guideFilePath)) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        result.append(line);
+      }
+    } catch (Exception e) {
+      throw new ServerException("Failed to read guide file", e);
+    }
+    return result.toString();
   }
 }

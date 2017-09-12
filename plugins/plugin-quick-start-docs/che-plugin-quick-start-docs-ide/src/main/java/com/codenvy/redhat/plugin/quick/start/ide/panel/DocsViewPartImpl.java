@@ -11,6 +11,7 @@
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
+import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Frame;
@@ -19,7 +20,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.eclipse.che.ide.api.parts.PartStackUIResources;
 import org.eclipse.che.ide.api.parts.base.BaseView;
-import org.eclipse.che.ide.util.loging.Log;
 
 /** @author Alexander Andrienko */
 @Singleton
@@ -36,14 +36,13 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
       QuickStartLocalizationConstant constants,
       DocsViewPartImplUiBinder uiBinder) {
     super(resources);
-
     setContentWidget(uiBinder.createAndBindUi(this));
     setTitle(constants.showPanelTitle());
   }
 
   @Override
-  public void setUrl(String url) {
-    Log.info(getClass(), " Url " + url);
-    frame.setUrl(url);
-  }
+  public void displayGuide(GuideDto guideDto) {}
+
+  @Override
+  public void showStub() {}
 }

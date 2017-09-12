@@ -13,14 +13,17 @@ package com.codenvy.redhat.plugin.quick.start.ide.panel;
 import static org.eclipse.che.ide.api.parts.PartStackType.TOOLING;
 
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
+import com.codenvy.redhat.plugin.quick.start.ide.QuickStartServiceClient;
+import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.eclipse.che.ide.api.app.AppContext;
 import org.eclipse.che.ide.api.data.HasDataObject;
 import org.eclipse.che.ide.api.event.SelectionChangedEvent;
+import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
+import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
 import org.eclipse.che.ide.api.parts.PartStack;
 import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
@@ -37,12 +40,10 @@ import org.eclipse.che.ide.util.loging.Log;
 @Singleton
 public class DocsPartPresenter extends BasePresenter implements DocsViewPart.ActionDelegate {
 
-  private static final String CHEAT_SHEETER_DOCS = "/quickstart";
-
   private final DocsViewPart view;
   private final QuickStartLocalizationConstant constants;
-  private final AppContext appContext;
   private final WorkspaceAgent workspaceAgent;
+  private final QuickStartServiceClient client;
 
   private Project lastSelected;
 
@@ -50,21 +51,27 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
   public DocsPartPresenter(
       final DocsViewPart view,
       QuickStartLocalizationConstant constants,
-      AppContext appContext,
       EventBus eventBus,
-      final WorkspaceAgent workspaceAgent) {
+      final WorkspaceAgent workspaceAgent,
+      QuickStartServiceClient client) {
     this.view = view;
     this.constants = constants;
-    this.appContext = appContext;
     this.workspaceAgent = workspaceAgent;
+    this.client = client;
 
     view.setDelegate(this);
 
-    eventBus.addHandler(SelectionChangedEvent.TYPE, event -> processCurrentProject(event));
-  }
+    eventBus.addHandler(SelectionChangedEvent.TYPE, this::processCurrentSelection);
+    eventBus.addHandler(WsAgentStateEvent.TYPE,
+                        new WsAgentStateHandler() {
+                      @Override
+                      public void onWsAgentStarted(WsAgentStateEvent wsAgentStateEvent) {
+                        addPart();
+                      }
 
-  public void init() {
-    view.setUrl(getDocsUrl());
+                      @Override
+                      public void onWsAgentStopped(WsAgentStateEvent wsAgentStateEvent) {}
+                    });
   }
 
   @Override
@@ -87,11 +94,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     acceptsOneWidget.setWidget(view);
   }
 
-  public String getDocsUrl() {
-    return appContext.getDevMachine().getWsAgentBaseUrl() + CHEAT_SHEETER_DOCS;
-  }
-
-  private void processCurrentProject(SelectionChangedEvent event) {
+  private void processCurrentSelection(SelectionChangedEvent event) {
     final Selection<?> selection = event.getSelection();
     if (selection instanceof Selection.NoSelectionProvided) {
       return;
@@ -102,6 +105,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     if (selection == null
         || selection.getHeadElement() == null
         || selection.getAllElements().size() > 1) {
+      // todo we still display previous selected project. Do we need improve this logic?
       return;
     }
 
@@ -117,10 +121,24 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
       currentResource = (Resource) headObject;
     }
 
-    Log.info(getClass(), currentResource.getProject());
+    Project currentProject = currentResource != null ? currentResource.getProject() : null;
 
-    if (currentResource.getProject() != null) {
-      view.setUrl(getDocsUrl() + "/" + currentResource.getProject());
+    if (currentProject != null && !currentProject.equals(lastSelected)) {
+      lastSelected = currentProject;
+      Log.info(getClass(), currentProject.getPath());
+      final String projectPath = currentProject.getPath();
+      client
+          .getGuide(projectPath)
+          .then(
+              guide -> {
+                view.displayGuide(guide); //todo simplify by quadro point
+                Log.info(getClass(), guide);
+              })
+          .catchError(
+              err -> {
+                Log.info(getClass(), "Failed to display guide by path " + projectPath);
+                //todo show stab
+              });
     }
 
     //    EditorPartStack activePartStack = editorMultiPartStack.getActivePartStack();
@@ -159,6 +177,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     //    lastSelected = rootProject;
   }
 
+  //don't update widget if panel is hidden, only update lastSelected...
   private void hidePart() {
     PartStack partStack = workspaceAgent.getPartStack(TOOLING);
     if (partStack != null && partStack.containsPart(this)) {

@@ -10,21 +10,12 @@
  */
 package com.codenvy.redhat.plugin.quick.start.shared;
 
-import java.util.List;
-import org.eclipse.che.dto.shared.DTO;
+/** @author Alexander Andrienko */
+public final class Constants {
 
-@DTO
-public interface ActionLinkDto {
+  public static final String QUICK_START_DOCS = "/quick-start-docs";
+  public static final String DOT_CHE = ".che";
+  public static final String WALK_THOUGHT_JSON = "walkThought.json";
 
-  String getActionId();
-
-  void setActionId(String actionId);
-
-  ActionLinkDto withActionId(String actionId);
-
-  List<String> getParameters();
-
-  void setParameters(List<String> parameters);
-
-  ActionLinkDto withParameters(List<String> parameters);
+  private Constants() {}
 }

@@ -10,19 +10,11 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide;
 
-import com.codenvy.redhat.plugin.quick.start.ide.panel.DocsPartPresenter;
-import javax.inject.Inject;
-import org.eclipse.che.ide.api.extension.Extension;
+import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
+import org.eclipse.che.api.promises.client.Promise;
 
-/**
- * Quick start panel entry point.
- *
- * @author Oleksander Andriienko
- */
-@Extension(title = "QuickStart")
-public class QuickStartDocsExtension {
+/** @author Alexander Andrienko */
+public interface QuickStartServiceClient {
 
-  @Inject
-  public QuickStartDocsExtension(final DocsPartPresenter docsPartPresenter) {
-  }
+  Promise<GuideDto> getGuide(String projectPath);
 }
