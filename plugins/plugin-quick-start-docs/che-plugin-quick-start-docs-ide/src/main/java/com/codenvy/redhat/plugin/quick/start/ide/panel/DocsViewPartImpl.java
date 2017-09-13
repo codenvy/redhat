@@ -11,10 +11,14 @@
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
+import com.codenvy.redhat.plugin.quick.start.ide.GuideResources;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
+import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideFragmentDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,26 +27,58 @@ import org.eclipse.che.ide.api.parts.base.BaseView;
 
 /** @author Alexander Andrienko */
 @Singleton
-public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
-    implements DocsViewPart {
+public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate> implements DocsViewPart {
 
-  @UiField Frame frame;
+  @UiField
+  VerticalPanel chapters;
+
+  private final QuickStartLocalizationConstant constants;
 
   interface DocsViewPartImplUiBinder extends UiBinder<Widget, DocsViewPartImpl> {}
 
   @Inject
   public DocsViewPartImpl(
-      PartStackUIResources resources,
-      QuickStartLocalizationConstant constants,
-      DocsViewPartImplUiBinder uiBinder) {
-    super(resources);
-    setContentWidget(uiBinder.createAndBindUi(this));
+          PartStackUIResources parStackRes,
+          GuideResources guideResources,
+          QuickStartLocalizationConstant constants,
+          DocsViewPartImplUiBinder uiBinder
+) {
+    super(parStackRes);
     setTitle(constants.showPanelTitle());
+
+    this.constants = constants;
+
+    setContentWidget(uiBinder.createAndBindUi(this));
   }
 
-  @Override
-  public void displayGuide(GuideDto guideDto) {}
+  /**
+   * Create a form that contains undisclosed advanced options.
+   */
+  private Widget addChapter(GuideFragmentDto fragmentDto) {
+    DisclosurePanel advancedDisclosure = new DisclosurePanel(fragmentDto.getTitle());
 
+    advancedDisclosure.ensureDebugId("cwDisclosurePanel");
+    advancedDisclosure.setContent(new HTML(fragmentDto.getText()));
+
+    return advancedDisclosure;
+  }
+
+  /** Display guide in the view. **/
   @Override
-  public void showStub() {}
+  public void displayGuide(GuideDto guideDto) {
+    chapters.clear();
+    chapters.setSpacing(8);
+
+    setTitle(guideDto.getTitle());
+
+    for (GuideFragmentDto fragment: guideDto.getFragments()) {
+      chapters.add(addChapter(fragment));
+    }
+  }
+
+  /** Show stub if guide is unavailable **/
+  @Override
+  public void showStub() {
+
+  }
 }
