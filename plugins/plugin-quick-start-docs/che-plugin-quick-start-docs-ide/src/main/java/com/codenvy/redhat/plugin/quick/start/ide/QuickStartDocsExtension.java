@@ -24,8 +24,8 @@ public class QuickStartDocsExtension {
 
   @Inject
   //todo
-  public QuickStartDocsExtension(final DocsPartPresenter docsPartPresenter,
-                                 GuideResources guideResources) {
+  public QuickStartDocsExtension(
+      final DocsPartPresenter docsPartPresenter, GuideResources guideResources) {
     guideResources.getGuideStyle().ensureInjected();
   }
 }

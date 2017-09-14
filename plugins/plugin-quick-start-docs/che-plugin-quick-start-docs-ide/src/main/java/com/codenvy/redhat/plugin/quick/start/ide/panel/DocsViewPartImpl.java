@@ -22,7 +22,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -30,7 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
 import org.eclipse.che.ide.api.parts.PartStackUIResources;
 import org.eclipse.che.ide.api.parts.base.BaseView;
 
@@ -133,8 +131,5 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   }
 
   @Override
-  public void reset() {
-
-  }
-
+  public void reset() {}
 }
