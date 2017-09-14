@@ -23,6 +23,5 @@ import org.eclipse.che.ide.api.extension.Extension;
 public class QuickStartDocsExtension {
 
   @Inject
-  public QuickStartDocsExtension(final DocsPartPresenter docsPartPresenter) {
-  }
+  public QuickStartDocsExtension(final DocsPartPresenter docsPartPresenter) {}
 }

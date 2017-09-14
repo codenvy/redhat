@@ -27,6 +27,6 @@ public interface DocsViewPart extends View<DocsViewPart.ActionDelegate> {
   void showStub();
 
   interface ActionDelegate extends BaseActionDelegate {
-     void onActionLinkClick();
+    void onActionLinkClick();
   }
 }

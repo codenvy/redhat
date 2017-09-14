@@ -10,8 +10,8 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
-import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
 import com.codenvy.redhat.plugin.quick.start.ide.GuideResources;
+import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideFragmentDto;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -27,10 +27,10 @@ import org.eclipse.che.ide.api.parts.base.BaseView;
 
 /** @author Alexander Andrienko */
 @Singleton
-public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate> implements DocsViewPart {
+public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
+    implements DocsViewPart {
 
-  @UiField
-  VerticalPanel chapters;
+  @UiField VerticalPanel chapters;
 
   private final QuickStartLocalizationConstant constants;
 
@@ -38,11 +38,10 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate> impl
 
   @Inject
   public DocsViewPartImpl(
-          PartStackUIResources parStackRes,
-          GuideResources guideResources,
-          QuickStartLocalizationConstant constants,
-          DocsViewPartImplUiBinder uiBinder
-) {
+      PartStackUIResources parStackRes,
+      GuideResources guideResources,
+      QuickStartLocalizationConstant constants,
+      DocsViewPartImplUiBinder uiBinder) {
     super(parStackRes);
     setTitle(constants.showPanelTitle());
 
@@ -51,9 +50,7 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate> impl
     setContentWidget(uiBinder.createAndBindUi(this));
   }
 
-  /**
-   * Create a form that contains undisclosed advanced options.
-   */
+  /** Create a form that contains undisclosed advanced options. */
   private Widget addChapter(GuideFragmentDto fragmentDto) {
     DisclosurePanel advancedDisclosure = new DisclosurePanel(fragmentDto.getTitle());
 
@@ -63,7 +60,7 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate> impl
     return advancedDisclosure;
   }
 
-  /** Display guide in the view. **/
+  /** Display guide in the view. * */
   @Override
   public void displayGuide(GuideDto guideDto) {
     chapters.clear();
@@ -71,14 +68,12 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate> impl
 
     setTitle(guideDto.getTitle());
 
-    for (GuideFragmentDto fragment: guideDto.getFragments()) {
+    for (GuideFragmentDto fragment : guideDto.getFragments()) {
       chapters.add(addChapter(fragment));
     }
   }
 
-  /** Show stub if guide is unavailable **/
+  /** Show stub if guide is unavailable * */
   @Override
-  public void showStub() {
-
-  }
+  public void showStub() {}
 }

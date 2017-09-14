@@ -13,12 +13,9 @@ package com.codenvy.redhat.plugin.quick.start.ide;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-/**
- * @author Alexander Andrienko
- */
+/** @author Alexander Andrienko */
 public interface GuideResources extends ClientBundle {
 
-    @Source({"guide.css"})
-    CssResource getGuideStyle();
-
+  @Source({"guide.css"})
+  CssResource getGuideStyle();
 }
