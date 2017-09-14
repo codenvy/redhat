@@ -15,7 +15,7 @@ public final class Constants {
 
   public static final String QUICK_START_DOCS = "/quick-start-docs";
   public static final String DOT_CHE = ".che";
-  public static final String WALK_THOUGHT_JSON = "walkThought.json";
+  public static final String WALK_THOUGHT_JSON = "walkme.json";
 
   private Constants() {}
 }

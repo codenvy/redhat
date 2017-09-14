@@ -16,14 +16,12 @@ import org.eclipse.che.dto.shared.DTO;
 @DTO
 public interface GuideDto {
 
-  //todo rename to description !!!!
   String getTitle();
 
   void setTitle(String title);
 
   GuideDto withTitle(String title);
 
-  //todo rename to chapter !!!
   List<GuideFragmentDto> getFragments();
 
   void setFragments(List<GuideFragmentDto> fragments);

@@ -14,7 +14,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
-    <ui:with field="guideResources" type="com.codenvy.redhat.plugin.quick.start.ide.GuideResources"/>
     <g:ScrollPanel>
         <g:VerticalPanel ui:field="chapters"/>
     </g:ScrollPanel>

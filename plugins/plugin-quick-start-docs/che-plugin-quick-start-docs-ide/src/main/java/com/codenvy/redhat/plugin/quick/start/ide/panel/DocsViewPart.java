@@ -11,6 +11,7 @@
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
 import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
+import java.util.Map;
 import org.eclipse.che.ide.api.mvp.View;
 import org.eclipse.che.ide.api.parts.base.BaseActionDelegate;
 
@@ -24,9 +25,11 @@ public interface DocsViewPart extends View<DocsViewPart.ActionDelegate> {
   /** Set the URL to load content into view. */
   void displayGuide(GuideDto guideDto);
 
-  void showStub();
+  void showStub(String stubMessage);
+
+  void reset();
 
   interface ActionDelegate extends BaseActionDelegate {
-    void onActionLinkClick();
+    void onActionLinkClick(String actionId, Map<String, String> parameters);
   }
 }

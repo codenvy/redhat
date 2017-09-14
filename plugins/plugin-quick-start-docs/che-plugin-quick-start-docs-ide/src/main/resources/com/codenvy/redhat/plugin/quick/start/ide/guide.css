@@ -8,3 +8,26 @@
  * Contributors:
  *   Red Hat, Inc. - initial API and implementation
  */
+
+@external .action-button, .action-button-container;
+
+.chapter-without-title {
+    padding-left: 25px;
+}
+
+.error-stub {
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center;
+}
+
+.action-button-container {
+    text-align: center;
+}
+
+.action-button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px;
+    display: inline-block;
+}

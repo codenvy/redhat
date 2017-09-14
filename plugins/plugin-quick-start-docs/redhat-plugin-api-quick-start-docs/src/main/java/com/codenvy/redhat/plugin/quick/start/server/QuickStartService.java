@@ -53,8 +53,10 @@ public class QuickStartService extends Service {
       throw new BadRequestException("Project path should be required.");
     }
 
+    String guideContent = getGuideContent(projectPath);
+
     try {
-      return dtoFactory.createDtoFromJson(getGuideContent(projectPath), GuideDto.class);
+      return dtoFactory.createDtoFromJson(guideContent, GuideDto.class);
     } catch (Exception e) {
       throw new ServerException("Failed to guide content. Cause: ", e);
     }

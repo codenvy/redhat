@@ -17,5 +17,20 @@ import com.google.gwt.resources.client.CssResource;
 public interface GuideResources extends ClientBundle {
 
   @Source({"guide.css"})
-  CssResource getGuideStyle();
+  GuideStyles getGuideStyle();
+
+  interface GuideStyles extends CssResource {
+
+    @ClassName("chapter-without-title")
+    String chapterWithoutTitle();
+
+    @ClassName(("error-stub"))
+    String stub();
+
+    @ClassName(("action-button"))
+    String actionButton();
+
+    @ClassName(("action-button-container"))
+    String actionButtonContainer();
+  }
 }

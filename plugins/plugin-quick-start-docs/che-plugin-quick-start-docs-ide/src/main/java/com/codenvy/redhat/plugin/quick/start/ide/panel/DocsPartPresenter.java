@@ -10,6 +10,7 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
+import static com.google.gwt.http.client.Response.SC_NOT_FOUND;
 import static org.eclipse.che.ide.api.parts.PartStackType.TOOLING;
 
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
@@ -17,8 +18,10 @@ import com.codenvy.redhat.plugin.quick.start.ide.QuickStartServiceClient;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.eclipse.che.ide.api.action.ActionManager;
 import org.eclipse.che.ide.api.data.HasDataObject;
 import org.eclipse.che.ide.api.event.SelectionChangedEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
@@ -29,7 +32,7 @@ import org.eclipse.che.ide.api.parts.base.BasePresenter;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.api.resources.Resource;
 import org.eclipse.che.ide.api.selection.Selection;
-import org.eclipse.che.ide.util.loging.Log;
+import org.eclipse.che.ide.commons.exception.ServerException;
 
 /**
  * Presenter to manage {@link DocsViewPart}
@@ -43,6 +46,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
   private final QuickStartLocalizationConstant constants;
   private final WorkspaceAgent workspaceAgent;
   private final QuickStartServiceClient client;
+  private final ActionManager actionManager;
 
   private Project lastSelected;
 
@@ -52,11 +56,13 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
       QuickStartLocalizationConstant constants,
       EventBus eventBus,
       final WorkspaceAgent workspaceAgent,
-      QuickStartServiceClient client) {
+      QuickStartServiceClient client,
+      ActionManager actionManager) {
     this.view = view;
     this.constants = constants;
     this.workspaceAgent = workspaceAgent;
     this.client = client;
+    this.actionManager = actionManager;
 
     view.setDelegate(this);
 
@@ -67,16 +73,19 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
           @Override
           public void onWsAgentStarted(WsAgentStateEvent wsAgentStateEvent) {
             addPart();
+            //            initializeSelection();
           }
 
           @Override
-          public void onWsAgentStopped(WsAgentStateEvent wsAgentStateEvent) {}
+          public void onWsAgentStopped(WsAgentStateEvent wsAgentStateEvent) {
+            hidePart();
+          }
         });
   }
 
   @Override
   public String getTitle() {
-    return constants.showPanelTitle();
+    return constants.guidePanelTitle();
   }
 
   @Override
@@ -86,7 +95,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
 
   @Override
   public String getTitleToolTip() {
-    return constants.showPanelDocsPopup();
+    return constants.guidePanelPopup();
   }
 
   @Override
@@ -105,7 +114,9 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     if (selection == null
         || selection.getHeadElement() == null
         || selection.getAllElements().size() > 1) {
-      // todo we still display previous selected project. Do we need improve this logic?
+
+      //todo improve detection project
+      view.showStub(constants.guidePanelCanDisplayGuideOnlyForOneSelectedProject());
       return;
     }
 
@@ -123,26 +134,26 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
 
     Project currentProject = currentResource != null ? currentResource.getProject() : null;
 
-    if (currentProject != null) { // Todo && !currentProject.equals(lastSelected)) {
+    if (currentProject != null && !currentProject.equals(lastSelected)) {
       lastSelected = currentProject;
-      Log.info(getClass(), currentProject.getPath());
       final String projectPath = currentProject.getPath();
       client
           .getGuide(projectPath)
-          .then(
-              guide -> {
-                view.displayGuide(guide); //todo simplify with help quadro point
-                Log.info(getClass(), guide);
-              })
+          .then(view::displayGuide)
           .catchError(
-              err -> {
-                Log.info(getClass(), "Failed to display guide by path " + projectPath);
-                //todo show stab
+              promiseError -> {
+                Throwable ex = promiseError.getCause();
+                //todo doesn't work ...
+                if (ex instanceof ServerException
+                    && ((ServerException) ex).getHTTPStatus() == SC_NOT_FOUND) {
+                  view.showStub(constants.nothingToShowForSelectedProject(projectPath));
+                } else {
+                  view.showStub(constants.failedToDisplayGuideForSelectedProject(projectPath));
+                }
               });
     }
   }
 
-  //don't update widget if panel is hidden, only update lastSelected...
   private void hidePart() {
     PartStack partStack = workspaceAgent.getPartStack(TOOLING);
     if (partStack != null && partStack.containsPart(this)) {
@@ -159,5 +170,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
   }
 
   @Override
-  public void onActionLinkClick() {}
+  public void onActionLinkClick(String actionId, Map<String, String> parameters) {
+    actionManager.performAction(actionId, parameters);
+  }
 }

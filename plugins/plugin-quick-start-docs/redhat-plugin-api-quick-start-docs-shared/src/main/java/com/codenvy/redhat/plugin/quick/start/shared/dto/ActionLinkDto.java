@@ -10,11 +10,17 @@
  */
 package com.codenvy.redhat.plugin.quick.start.shared.dto;
 
-import java.util.List;
+import java.util.Map;
 import org.eclipse.che.dto.shared.DTO;
 
 @DTO
 public interface ActionLinkDto {
+
+  String getLabel();
+
+  void setLabel(String label);
+
+  ActionLinkDto withLabel(String label);
 
   String getActionId();
 
@@ -22,9 +28,9 @@ public interface ActionLinkDto {
 
   ActionLinkDto withActionId(String actionId);
 
-  List<String> getParameters();
+  Map<String, String> getParameters();
 
-  void setParameters(List<String> parameters);
+  void setParameters(Map<String, String> parameters);
 
-  ActionLinkDto withParameters(List<String> parameters);
+  ActionLinkDto withParameters(Map<String, String> parameters);
 }

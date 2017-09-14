@@ -23,5 +23,9 @@ import org.eclipse.che.ide.api.extension.Extension;
 public class QuickStartDocsExtension {
 
   @Inject
-  public QuickStartDocsExtension(final DocsPartPresenter docsPartPresenter) {}
+  //todo
+  public QuickStartDocsExtension(final DocsPartPresenter docsPartPresenter,
+                                 GuideResources guideResources) {
+    guideResources.getGuideStyle().ensureInjected();
+  }
 }

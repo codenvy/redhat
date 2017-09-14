@@ -15,9 +15,21 @@ import com.google.gwt.i18n.client.Messages;
 /** @author Alexander Andrienko */
 public interface QuickStartLocalizationConstant extends Messages {
 
-  @Key("show.panel.docs.title")
-  String showPanelTitle();
+  @Key("guide.panel.docs.title")
+  String guidePanelTitle();
 
-  @Key("show.panel.docs.popup")
-  String showPanelDocsPopup();
+  @Key("guide.panel.popup")
+  String guidePanelPopup();
+
+  @Key("guide.panel.can.display.guide.only.for.one.selected.project")
+  String guidePanelCanDisplayGuideOnlyForOneSelectedProject();
+
+  @Key("guide.panel.nothing.to.show")
+  String guidePanelNothingToShow();
+
+  @Key("guide.panel.nothing.to.show.for.selected.project")
+  String nothingToShowForSelectedProject(String selectedProject);
+
+  @Key("guide.panel.failed.to.display.guide.for.selected.project")
+  String failedToDisplayGuideForSelectedProject(String project);
 }
