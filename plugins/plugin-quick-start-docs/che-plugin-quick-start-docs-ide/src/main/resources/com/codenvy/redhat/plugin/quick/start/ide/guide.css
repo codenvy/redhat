@@ -9,8 +9,6 @@
  *   Red Hat, Inc. - initial API and implementation
  */
 
-@external .action-button, .action-button-container;
-
 .chapter-without-title {
     padding-left: 25px;
 }
