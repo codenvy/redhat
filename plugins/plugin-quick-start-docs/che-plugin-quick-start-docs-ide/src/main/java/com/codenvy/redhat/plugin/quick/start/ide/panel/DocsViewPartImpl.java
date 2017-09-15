@@ -25,8 +25,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import java.util.HashMap;
-import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.eclipse.che.ide.api.parts.PartStackUIResources;
@@ -40,7 +38,6 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   @UiField VerticalPanel chapters;
 
   private final GuideResources guideResources;
-  private final Map<String, Widget> widgetToProject;
 
   interface DocsViewPartImplUiBinder extends UiBinder<Widget, DocsViewPartImpl> {}
 
@@ -55,7 +52,6 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
 
     this.guideResources = guideResources;
 
-    widgetToProject = new HashMap<>();
     setContentWidget(uiBinder.createAndBindUi(this));
   }
 
@@ -99,8 +95,6 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   }
 
   private Button createActionButton(ActionLinkDto actionLink) {
-    // todo what is label is null ?
-    // todo validation of the actionId if it's null
     Button actionButton = new Button(actionLink.getLabel());
     actionButton.addClickHandler(
         event -> delegate.onActionLinkClick(actionLink.getActionId(), actionLink.getParameters()));
@@ -111,7 +105,6 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   @Override
   public void displayGuide(GuideDto guideDto) {
     chapters.clear();
-    //    chapters.setSpacing(8);
 
     setTitle(guideDto.getTitle());
 
@@ -129,7 +122,4 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
     stubPanel.addStyleName(guideResources.getGuideStyle().stub());
     chapters.add(stubPanel);
   }
-
-  @Override
-  public void reset() {}
 }

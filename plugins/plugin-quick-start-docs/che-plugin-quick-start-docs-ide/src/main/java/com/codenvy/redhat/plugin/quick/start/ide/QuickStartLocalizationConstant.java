@@ -21,15 +21,6 @@ public interface QuickStartLocalizationConstant extends Messages {
   @Key("guide.panel.popup")
   String guidePanelPopup();
 
-  @Key("guide.panel.can.display.guide.only.for.one.selected.project")
-  String guidePanelCanDisplayGuideOnlyForOneSelectedProject();
-
   @Key("guide.panel.nothing.to.show")
   String guidePanelNothingToShow();
-
-  @Key("guide.panel.nothing.to.show.for.selected.project")
-  String nothingToShowForSelectedProject(String selectedProject);
-
-  @Key("guide.panel.failed.to.display.guide.for.selected.project")
-  String failedToDisplayGuideForSelectedProject(String project);
 }

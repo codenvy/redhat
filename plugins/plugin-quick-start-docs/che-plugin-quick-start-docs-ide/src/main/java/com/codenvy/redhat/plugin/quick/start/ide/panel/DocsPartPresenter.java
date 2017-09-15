@@ -10,7 +10,6 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
-import static com.google.gwt.http.client.Response.SC_NOT_FOUND;
 import static org.eclipse.che.ide.api.parts.PartStackType.TOOLING;
 
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
@@ -32,7 +31,6 @@ import org.eclipse.che.ide.api.parts.base.BasePresenter;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.api.resources.Resource;
 import org.eclipse.che.ide.api.selection.Selection;
-import org.eclipse.che.ide.commons.exception.ServerException;
 
 /**
  * Presenter to manage {@link DocsViewPart}
@@ -73,7 +71,6 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
           @Override
           public void onWsAgentStarted(WsAgentStateEvent wsAgentStateEvent) {
             addPart();
-            //            initializeSelection();
           }
 
           @Override
@@ -114,9 +111,6 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
     if (selection == null
         || selection.getHeadElement() == null
         || selection.getAllElements().size() > 1) {
-
-      //todo improve detection project
-      view.showStub(constants.guidePanelCanDisplayGuideOnlyForOneSelectedProject());
       return;
     }
 
@@ -142,14 +136,7 @@ public class DocsPartPresenter extends BasePresenter implements DocsViewPart.Act
           .then(view::displayGuide)
           .catchError(
               promiseError -> {
-                Throwable ex = promiseError.getCause();
-                //todo doesn't work ...
-                if (ex instanceof ServerException
-                    && ((ServerException) ex).getHTTPStatus() == SC_NOT_FOUND) {
-                  view.showStub(constants.nothingToShowForSelectedProject(projectPath));
-                } else {
-                  view.showStub(constants.failedToDisplayGuideForSelectedProject(projectPath));
-                }
+                view.showStub(constants.guidePanelNothingToShow());
               });
     }
   }

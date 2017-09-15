@@ -33,7 +33,6 @@ import org.eclipse.che.api.core.rest.Service;
 import org.eclipse.che.dto.server.DtoFactory;
 
 /** @author Oleksander Andriienko */
-//todo maybe move logic to the parser to simplify testing
 @Path(QUICK_START_DOCS)
 public class QuickStartService extends Service {
 

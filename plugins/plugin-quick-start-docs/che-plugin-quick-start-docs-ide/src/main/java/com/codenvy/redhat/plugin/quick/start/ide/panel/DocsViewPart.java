@@ -27,8 +27,6 @@ public interface DocsViewPart extends View<DocsViewPart.ActionDelegate> {
 
   void showStub(String stubMessage);
 
-  void reset();
-
   interface ActionDelegate extends BaseActionDelegate {
     void onActionLinkClick(String actionId, Map<String, String> parameters);
   }
