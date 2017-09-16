@@ -25,10 +25,12 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import java.util.HashMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.eclipse.che.ide.api.parts.PartStackUIResources;
 import org.eclipse.che.ide.api.parts.base.BaseView;
+import org.eclipse.che.ide.api.resources.Project;
 
 /** @author Alexander Andrienko */
 @Singleton
@@ -56,26 +58,26 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   }
 
   /** Create guide fragment. */
-  private Widget createFragment(GuideFragmentDto fragmentDto) {
+  private Widget createFragment(Project project, GuideFragmentDto fragmentDto) {
     if (fragmentDto.getTitle() == null) {
-      Widget chapter = createChapter(fragmentDto);
+      Widget chapter = createChapter(project, fragmentDto);
       chapter.addStyleName(guideResources.getGuideStyle().chapterWithoutTitle());
       return chapter;
     }
 
     // create chapter with title
     DisclosurePanel advancedDisclosure = new DisclosurePanel(fragmentDto.getTitle());
-    advancedDisclosure.setContent(createChapter(fragmentDto));
+    advancedDisclosure.setContent(createChapter(project, fragmentDto));
     return advancedDisclosure;
   }
 
-  private Widget createChapter(GuideFragmentDto fragmentDto) {
+  private Widget createChapter(Project project, GuideFragmentDto fragmentDto) {
     if (fragmentDto.getActionLink() != null) {
       Widget safeHtmlWidget = createSafeHtmlWidget(fragmentDto.getText());
 
       FlowPanel buttonPanel = new FlowPanel();
       buttonPanel.addStyleName(guideResources.getGuideStyle().actionButtonContainer());
-      Button actionButton = createActionButton(fragmentDto.getActionLink());
+      Button actionButton = createActionButton(project, fragmentDto.getActionLink());
       actionButton.addStyleName(guideResources.getGuideStyle().actionButton());
       buttonPanel.add(actionButton);
 
@@ -94,22 +96,25 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
     return new HTMLPanel(safeHtmlBuilder.toSafeHtml());
   }
 
-  private Button createActionButton(ActionLinkDto actionLink) {
+  private Button createActionButton(Project project, ActionLinkDto actionLink) {
+    HashMap<String, String> parameters = new HashMap<>(actionLink.getParameters());
+    parameters.put("projectPath", project.getPath());
+
     Button actionButton = new Button(actionLink.getLabel());
     actionButton.addClickHandler(
-        event -> delegate.onActionLinkClick(actionLink.getActionId(), actionLink.getParameters()));
+        event -> delegate.onActionLinkClick(actionLink.getActionId(), parameters));
     return actionButton;
   }
 
   /** Display guide in the view. */
   @Override
-  public void displayGuide(GuideDto guideDto) {
+  public void displayGuide(Project project, GuideDto guideDto) {
     chapters.clear();
 
     setTitle(guideDto.getTitle());
 
     for (GuideFragmentDto fragment : guideDto.getFragments()) {
-      chapters.add(createFragment(fragment));
+      chapters.add(createFragment(project, fragment));
     }
   }
 

@@ -139,7 +139,10 @@ public class DocsPartPresenter extends BasePresenter
       final String projectPath = currentProject.getPath();
       client
           .getGuide(projectPath)
-          .then(view::displayGuide)
+          .then(
+              guideDto -> {
+                view.displayGuide(currentProject, guideDto);
+              })
           .catchError(
               promiseError -> {
                 view.showStub(constants.guidePanelNothingToShow());

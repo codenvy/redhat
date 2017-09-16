@@ -14,6 +14,7 @@ import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
 import java.util.Map;
 import org.eclipse.che.ide.api.mvp.View;
 import org.eclipse.che.ide.api.parts.base.BaseActionDelegate;
+import org.eclipse.che.ide.api.resources.Project;
 
 /**
  * Panel to display static html content parsed form .cheatcheet.xml content.
@@ -23,7 +24,7 @@ import org.eclipse.che.ide.api.parts.base.BaseActionDelegate;
 public interface DocsViewPart extends View<DocsViewPart.ActionDelegate> {
 
   /** Set the URL to load content into view. */
-  void displayGuide(GuideDto guideDto);
+  void displayGuide(Project project, GuideDto guideDto);
 
   void showStub(String stubMessage);
 

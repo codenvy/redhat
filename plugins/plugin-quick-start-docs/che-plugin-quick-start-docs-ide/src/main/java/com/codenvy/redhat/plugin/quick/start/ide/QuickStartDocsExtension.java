@@ -10,8 +10,11 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide;
 
+import com.codenvy.redhat.plugin.quick.start.ide.action.OpenFileAction;
+import com.codenvy.redhat.plugin.quick.start.ide.action.RevealResourceAction;
 import com.codenvy.redhat.plugin.quick.start.ide.panel.DocsPartPresenter;
 import javax.inject.Inject;
+import org.eclipse.che.ide.api.action.ActionManager;
 import org.eclipse.che.ide.api.extension.Extension;
 
 /**
@@ -24,7 +27,14 @@ public class QuickStartDocsExtension {
 
   @Inject
   public QuickStartDocsExtension(
-      final DocsPartPresenter docsPartPresenter, GuideResources guideResources) {
+      final DocsPartPresenter docsPartPresenter,
+      GuideResources guideResources,
+      OpenFileAction openFileAction,
+      RevealResourceAction revealResourceAction,
+      ActionManager actionManager) {
     guideResources.getGuideStyle().ensureInjected();
+
+    actionManager.registerAction("open-file", openFileAction);
+    actionManager.registerAction("expand-path", revealResourceAction);
   }
 }
