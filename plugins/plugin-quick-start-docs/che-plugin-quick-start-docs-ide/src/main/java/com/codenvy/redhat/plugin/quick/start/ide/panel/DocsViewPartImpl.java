@@ -117,6 +117,7 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   @Override
   public void showStub(String stubMessage) {
     chapters.clear();
+    setTitle("");
     FlowPanel stubPanel = new FlowPanel();
     stubPanel.add(new Label(stubMessage));
     stubPanel.addStyleName(guideResources.getGuideStyle().stub());
