@@ -29,11 +29,11 @@
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>
-            <artifactId>redhat-plugin-api-quick-start-docs</artifactId>
+            <artifactId>redhat-plugin-quick-start-docs-server</artifactId>
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>
-            <artifactId>redhat-plugin-api-quick-start-docs-shared</artifactId>
+            <artifactId>redhat-plugin-quick-start-docs-shared</artifactId>
         </dependency>
     </dependencies>
     <build>

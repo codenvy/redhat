@@ -23,8 +23,8 @@
     <packaging>pom</packaging>
     <name>CHE Plugin :: Quick start docs :: Parent</name>
     <modules>
-        <module>che-plugin-quick-start-docs-ide</module>
-        <module>redhat-plugin-api-quick-start-docs-shared</module>
-        <module>redhat-plugin-api-quick-start-docs</module>
+        <module>redhat-plugin-quick-start-docs-ide</module>
+        <module>redhat-plugin-quick-start-docs-shared</module>
+        <module>redhat-plugin-quick-start-docs-server</module>
     </modules>
 </project>

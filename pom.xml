@@ -119,11 +119,6 @@
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>
-                <artifactId>che-plugin-quick-start-docs-ide</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codenvy.redhat.plugin</groupId>
                 <artifactId>plugin-redhat-dashboard</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -139,12 +134,17 @@
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>
-                <artifactId>redhat-plugin-api-quick-start-docs</artifactId>
+                <artifactId>redhat-plugin-quick-start-docs-ide</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.codenvy.redhat.plugin</groupId>
-                <artifactId>redhat-plugin-api-quick-start-docs-shared</artifactId>
+                <artifactId>redhat-plugin-quick-start-docs-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codenvy.redhat.plugin</groupId>
+                <artifactId>redhat-plugin-quick-start-docs-shared</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
