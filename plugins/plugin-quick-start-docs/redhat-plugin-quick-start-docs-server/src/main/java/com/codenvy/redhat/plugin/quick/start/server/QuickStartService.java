@@ -21,7 +21,6 @@ import java.nio.file.Files;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -69,7 +68,7 @@ public class QuickStartService extends Service {
         workspaceStorage.toPath().resolve(projectPath).resolve(DOT_CHE).resolve(WALK_THOUGHT_JSON);
 
     if (!Files.exists(guideFilePath)) {
-      throw new NotFoundException("Guide for project " + projectPath + " was not found.");
+      return "{}";
     }
 
     StringBuilder result = new StringBuilder();
