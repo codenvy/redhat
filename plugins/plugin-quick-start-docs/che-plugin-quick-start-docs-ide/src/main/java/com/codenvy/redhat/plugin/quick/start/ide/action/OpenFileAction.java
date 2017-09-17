@@ -16,6 +16,7 @@ import static org.eclipse.che.ide.api.notification.StatusNotification.DisplayMod
 import static org.eclipse.che.ide.api.notification.StatusNotification.Status.FAIL;
 import static org.eclipse.che.ide.resource.Path.valueOf;
 
+import com.google.common.base.Strings;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
@@ -27,6 +28,7 @@ import org.eclipse.che.api.promises.client.Promise;
 import org.eclipse.che.api.promises.client.callback.CallbackPromiseHelper.Call;
 import org.eclipse.che.api.promises.client.js.JsPromiseError;
 import org.eclipse.che.api.promises.client.js.Promises;
+import org.eclipse.che.commons.annotation.Nullable;
 import org.eclipse.che.ide.CoreLocalizationConstant;
 import org.eclipse.che.ide.api.action.Action;
 import org.eclipse.che.ide.api.action.ActionEvent;
@@ -132,7 +134,11 @@ public class OpenFileAction extends Action implements PromisableAction {
             });
   }
 
-  private void scrollToLine(EditorPartPresenter editor, String lineParam) {
+  private void scrollToLine(EditorPartPresenter editor, @Nullable String lineParam) {
+    if (Strings.isNullOrEmpty(lineParam)) {
+      return;
+    }
+
     if (!(editor instanceof TextEditor)) {
       return;
     }
