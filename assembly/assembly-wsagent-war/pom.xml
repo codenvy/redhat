@@ -28,8 +28,12 @@
             <type>war</type>
         </dependency>
         <dependency>
-            <groupId>com.codenvy.redhat.wsagent</groupId>
-            <artifactId>redhat-core-api-cheatsheeter</artifactId>
+            <groupId>com.codenvy.redhat.plugin</groupId>
+            <artifactId>redhat-plugin-quick-start-docs-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.codenvy.redhat.plugin</groupId>
+            <artifactId>redhat-plugin-quick-start-docs-shared</artifactId>
         </dependency>
     </dependencies>
     <build>
