@@ -27,6 +27,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.eclipse.che.api.core.ApiException;
 import org.eclipse.che.api.core.BadRequestException;
+import org.eclipse.che.api.core.NotFoundException;
 import org.eclipse.che.api.core.ServerException;
 import org.eclipse.che.api.core.rest.Service;
 import org.eclipse.che.dto.server.DtoFactory;
@@ -68,7 +69,7 @@ public class QuickStartService extends Service {
         workspaceStorage.toPath().resolve(projectPath).resolve(DOT_CHE).resolve(WALK_THOUGHT_JSON);
 
     if (!Files.exists(guideFilePath)) {
-      return "{}";
+      throw new NotFoundException("No guide found for the project " + projectPath);
     }
 
     StringBuilder result = new StringBuilder();
