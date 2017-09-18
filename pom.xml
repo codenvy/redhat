@@ -20,7 +20,7 @@
     </parent>
     <groupId>com.codenvy.redhat</groupId>
     <artifactId>redhat-parent</artifactId>
-    <version>5.17.1-SNAPSHOT</version>
+    <version>5.17.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>RedHat :: Parent</name>
     <modules>
