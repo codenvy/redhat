@@ -44,10 +44,6 @@
         </dependency>
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>
-            <artifactId>plugin-cheatsheeter-docs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.codenvy.redhat.plugin</groupId>
             <artifactId>plugin-redhat-dashboard</artifactId>
         </dependency>
         <dependency>
@@ -57,6 +53,10 @@
         <dependency>
             <groupId>com.codenvy.redhat.plugin</groupId>
             <artifactId>plugin-redhat-product-info</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.codenvy.redhat.plugin</groupId>
+            <artifactId>redhat-plugin-quick-start-docs-ide</artifactId>
         </dependency>
     </dependencies>
     <build>

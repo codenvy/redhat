@@ -49,6 +49,7 @@
                                     <type>war</type>
                                 </artifactItem>
                             </artifactItems>
+                            <excludes>WEB-INF/lib/che-core-ide-stacks-*.jar</excludes>
                         </configuration>
                     </execution>
                     <execution>
@@ -65,6 +66,22 @@
                                     <artifactId>site</artifactId>
                                     <classifier>${site.classifier}</classifier>
                                     <type>zip</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-stacks</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/source-war/WEB-INF/lib</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.codenvy.redhat</groupId>
+                                    <artifactId>che-core-ide-stacks</artifactId>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
