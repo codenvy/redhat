@@ -10,6 +10,9 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
+import static org.eclipse.che.ide.ui.menu.PositionController.HorizontalAlign.MIDDLE;
+import static org.eclipse.che.ide.ui.menu.PositionController.VerticalAlign.BOTTOM;
+
 import com.codenvy.redhat.plugin.quick.start.ide.GuideResources;
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.ActionDto;
@@ -28,9 +31,12 @@ import com.google.gwt.user.client.ui.Widget;
 import java.util.HashMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.eclipse.che.ide.FontAwesome;
 import org.eclipse.che.ide.api.parts.PartStackUIResources;
 import org.eclipse.che.ide.api.parts.base.BaseView;
+import org.eclipse.che.ide.api.parts.base.ToolButton;
 import org.eclipse.che.ide.api.resources.Project;
+import org.eclipse.che.ide.ui.Tooltip;
 
 /** @author Alexander Andrienko */
 @Singleton
@@ -40,6 +46,7 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   @UiField VerticalPanel chapters;
 
   private final GuideResources guideResources;
+  private static final String REFRESH_BUTTON_ID = "refreshGuideButton";
 
   interface DocsViewPartImplUiBinder extends UiBinder<Widget, DocsViewPartImpl> {}
 
@@ -55,6 +62,20 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
     this.guideResources = guideResources;
 
     setContentWidget(uiBinder.createAndBindUi(this));
+
+    ToolButton refreshButton = new ToolButton(FontAwesome.REFRESH);
+    refreshButton.addClickHandler(event -> delegate.onRefreshGuideButtonClick());
+
+    Tooltip.create(
+        (elemental.dom.Element) refreshButton.getElement(),
+        BOTTOM,
+        MIDDLE,
+        constants.guidePanelRefreshButton());
+    refreshButton.ensureDebugId(REFRESH_BUTTON_ID);
+    refreshButton.setVisible(true);
+    addToolButton(refreshButton);
+
+    chapters.addStyleName(guideResources.getGuideStyle().fullWidthContainer());
   }
 
   /** Create guide section. */
@@ -67,6 +88,7 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
 
     // create chapter with title
     DisclosurePanel advancedDisclosure = new DisclosurePanel(sectionDto.getTitle());
+    advancedDisclosure.addStyleName(guideResources.getGuideStyle().fullWidthContainer());
     advancedDisclosure.setContent(createChapter(project, sectionDto));
     return advancedDisclosure;
   }

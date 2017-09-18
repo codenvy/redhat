@@ -135,18 +135,25 @@ public class DocsPartPresenter extends BasePresenter
 
     if (currentProject != null && !currentProject.equals(lastSelected)) {
       lastSelected = currentProject;
-      final String projectPath = currentProject.getPath();
-      client
-          .getGuide(projectPath)
-          .then(
-              guideDto -> {
-                view.displayGuide(currentProject, guideDto);
-              })
-          .catchError(
-              promiseError -> {
-                view.showStub(constants.guidePanelNothingToShow());
-              });
+      displayGuide(currentProject);
     }
+  }
+
+  public void onRefreshGuideButtonClick() {
+    displayGuide(lastSelected);
+  }
+
+  private void displayGuide(Project project) {
+    client
+        .getGuide(project.getPath())
+        .then(
+            guideDto -> {
+              view.displayGuide(project, guideDto);
+            })
+        .catchError(
+            promiseError -> {
+              view.showStub(constants.guidePanelNothingToShow());
+            });
   }
 
   private void hidePart() {
