@@ -10,6 +10,9 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
+import static org.eclipse.che.ide.ui.menu.PositionController.HorizontalAlign.MIDDLE;
+import static org.eclipse.che.ide.ui.menu.PositionController.VerticalAlign.BOTTOM;
+
 import com.codenvy.redhat.plugin.quick.start.ide.GuideResources;
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.ActionDto;
@@ -28,9 +31,12 @@ import com.google.gwt.user.client.ui.Widget;
 import java.util.HashMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.eclipse.che.ide.FontAwesome;
 import org.eclipse.che.ide.api.parts.PartStackUIResources;
 import org.eclipse.che.ide.api.parts.base.BaseView;
+import org.eclipse.che.ide.api.parts.base.ToolButton;
 import org.eclipse.che.ide.api.resources.Project;
+import org.eclipse.che.ide.ui.Tooltip;
 
 /** @author Alexander Andrienko */
 @Singleton
@@ -40,6 +46,7 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   @UiField VerticalPanel chapters;
 
   private final GuideResources guideResources;
+  private static final String REFRESH_BUTTON_ID = "refreshGuideButton";
 
   interface DocsViewPartImplUiBinder extends UiBinder<Widget, DocsViewPartImpl> {}
 
@@ -55,40 +62,55 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
     this.guideResources = guideResources;
 
     setContentWidget(uiBinder.createAndBindUi(this));
+
+    ToolButton refreshButton = new ToolButton(FontAwesome.REFRESH);
+    refreshButton.addClickHandler(event -> delegate.onRefreshGuideButtonClick());
+
+    Tooltip.create(
+        (elemental.dom.Element) refreshButton.getElement(),
+        BOTTOM,
+        MIDDLE,
+        constants.guidePanelRefreshButton());
+    refreshButton.ensureDebugId(REFRESH_BUTTON_ID);
+    refreshButton.setVisible(true);
+    addToolButton(refreshButton);
+
+    chapters.addStyleName(guideResources.getGuideStyle().fullWidthContainer());
   }
 
-  /** Create guide fragment. */
-  private Widget createFragment(Project project, SectionDto fragmentDto) {
-    if (fragmentDto.getTitle() == null) {
-      Widget chapter = createChapter(project, fragmentDto);
+  /** Create guide section. */
+  private Widget createSection(Project project, SectionDto sectionDto) {
+    if (sectionDto.getTitle() == null) {
+      Widget chapter = createChapter(project, sectionDto);
       chapter.addStyleName(guideResources.getGuideStyle().chapterWithoutTitle());
       return chapter;
     }
 
     // create chapter with title
-    DisclosurePanel advancedDisclosure = new DisclosurePanel(fragmentDto.getTitle());
-    advancedDisclosure.setContent(createChapter(project, fragmentDto));
+    DisclosurePanel advancedDisclosure = new DisclosurePanel(sectionDto.getTitle());
+    advancedDisclosure.addStyleName(guideResources.getGuideStyle().fullWidthContainer());
+    advancedDisclosure.setContent(createChapter(project, sectionDto));
     return advancedDisclosure;
   }
 
-  private Widget createChapter(Project project, SectionDto fragmentDto) {
-    if (fragmentDto.getAction() != null) {
-      Widget safeHtmlWidget = createSafeHtmlWidget(fragmentDto.getText());
+  private Widget createChapter(Project project, SectionDto sectionDto) {
+    FlowPanel chapterPanel = new FlowPanel();
 
-      FlowPanel buttonPanel = new FlowPanel();
-      buttonPanel.addStyleName(guideResources.getGuideStyle().actionButtonContainer());
-      Button actionButton = createActionButton(project, fragmentDto.getAction());
-      actionButton.addStyleName(guideResources.getGuideStyle().actionButton());
-      buttonPanel.add(actionButton);
-
-      FlowPanel flowPanel = new FlowPanel();
-      flowPanel.add(safeHtmlWidget);
-      flowPanel.add(buttonPanel);
-
-      return flowPanel;
+    if (sectionDto.getText() != null) {
+      Widget safeHtmlWidget = createSafeHtmlWidget(sectionDto.getText());
+      chapterPanel.add(safeHtmlWidget);
     }
 
-    return createSafeHtmlWidget(fragmentDto.getText());
+    if (sectionDto.getAction() != null) {
+      FlowPanel buttonPanel = new FlowPanel();
+      buttonPanel.addStyleName(guideResources.getGuideStyle().actionButtonContainer());
+      Button actionButton = createActionButton(project, sectionDto.getAction());
+      actionButton.addStyleName(guideResources.getGuideStyle().actionButton());
+      buttonPanel.add(actionButton);
+      chapterPanel.add(buttonPanel);
+    }
+
+    return chapterPanel;
   }
 
   private Widget createSafeHtmlWidget(String htmlText) {
@@ -96,13 +118,13 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
     return new HTMLPanel(safeHtmlBuilder.toSafeHtml());
   }
 
-  private Button createActionButton(Project project, ActionDto actionLink) {
-    HashMap<String, String> parameters = new HashMap<>(actionLink.getParameters());
+  private Button createActionButton(Project project, ActionDto actionDto) {
+    HashMap<String, String> parameters = new HashMap<>(actionDto.getParameters());
     parameters.put("projectPath", project.getPath());
 
-    Button actionButton = new Button(actionLink.getLabel());
+    Button actionButton = new Button(actionDto.getLabel());
     actionButton.addClickHandler(
-        event -> delegate.onActionLinkClick(actionLink.getActionId(), parameters));
+        event -> delegate.onActionLinkClick(actionDto.getActionId(), parameters));
     return actionButton;
   }
 
@@ -113,8 +135,8 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
 
     setTitle(guideDto.getTitle());
 
-    for (SectionDto fragment : guideDto.getSections()) {
-      chapters.add(createFragment(project, fragment));
+    for (SectionDto section : guideDto.getSections()) {
+      chapters.add(createSection(project, section));
     }
   }
 

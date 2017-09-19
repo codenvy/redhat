@@ -14,8 +14,6 @@ import static org.eclipse.che.ide.api.parts.PartStackType.TOOLING;
 
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartServiceClient;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
@@ -24,7 +22,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.eclipse.che.ide.api.action.ActionManager;
 import org.eclipse.che.ide.api.data.HasDataObject;
-import org.eclipse.che.ide.api.data.tree.Node;
+import org.eclipse.che.ide.api.event.SelectionChangedEvent;
+import org.eclipse.che.ide.api.event.SelectionChangedHandler;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateEvent;
 import org.eclipse.che.ide.api.machine.events.WsAgentStateHandler;
 import org.eclipse.che.ide.api.parts.PartStack;
@@ -32,7 +31,7 @@ import org.eclipse.che.ide.api.parts.WorkspaceAgent;
 import org.eclipse.che.ide.api.parts.base.BasePresenter;
 import org.eclipse.che.ide.api.resources.Project;
 import org.eclipse.che.ide.api.resources.Resource;
-import org.eclipse.che.ide.part.explorer.project.ProjectExplorerPresenter;
+import org.eclipse.che.ide.api.selection.Selection;
 
 /**
  * Presenter to manage {@link DocsViewPart}
@@ -41,7 +40,7 @@ import org.eclipse.che.ide.part.explorer.project.ProjectExplorerPresenter;
  */
 @Singleton
 public class DocsPartPresenter extends BasePresenter
-    implements DocsViewPart.ActionDelegate, SelectionHandler<Node> {
+    implements DocsViewPart.ActionDelegate, SelectionChangedHandler {
 
   private final DocsViewPart view;
   private final QuickStartLocalizationConstant constants;
@@ -58,8 +57,7 @@ public class DocsPartPresenter extends BasePresenter
       EventBus eventBus,
       final WorkspaceAgent workspaceAgent,
       QuickStartServiceClient client,
-      ActionManager actionManager,
-      final ProjectExplorerPresenter projectExplorer) {
+      ActionManager actionManager) {
     this.view = view;
     this.constants = constants;
     this.workspaceAgent = workspaceAgent;
@@ -67,7 +65,6 @@ public class DocsPartPresenter extends BasePresenter
     this.actionManager = actionManager;
 
     view.setDelegate(this);
-    projectExplorer.addSelectionHandler(this);
 
     eventBus.addHandler(
         WsAgentStateEvent.TYPE,
@@ -75,6 +72,7 @@ public class DocsPartPresenter extends BasePresenter
           @Override
           public void onWsAgentStarted(WsAgentStateEvent wsAgentStateEvent) {
             addPart();
+            workspaceAgent.openPart(DocsPartPresenter.this, TOOLING);
           }
 
           @Override
@@ -82,6 +80,8 @@ public class DocsPartPresenter extends BasePresenter
             hidePart();
           }
         });
+
+    eventBus.addHandler(SelectionChangedEvent.TYPE, this);
   }
 
   @Override
@@ -105,42 +105,55 @@ public class DocsPartPresenter extends BasePresenter
   }
 
   @Override
-  public void onSelection(SelectionEvent<Node> event) {
-    Node selectedNode = event.getSelectedItem();
-
-    if (selectedNode == null) {
-      view.showStub(constants.guidePanelNothingToShow());
+  public void onSelectionChanged(SelectionChangedEvent selectionChangedEvent) {
+    final Selection<?> selection = selectionChangedEvent.getSelection();
+    if (selection instanceof Selection.NoSelectionProvided) {
       return;
     }
 
     Resource currentResource = null;
-    if (selectedNode instanceof HasDataObject) {
-      Object data = ((HasDataObject) selectedNode).getData();
+
+    if (selection == null
+        || selection.getHeadElement() == null
+        || selection.getAllElements().size() > 1) {
+      return;
+    }
+
+    final Object headObject = selection.getHeadElement();
+
+    if (headObject instanceof HasDataObject) {
+      Object data = ((HasDataObject) headObject).getData();
 
       if (data instanceof Resource) {
         currentResource = (Resource) data;
       }
-
-    } else if (selectedNode instanceof Resource) {
-      currentResource = (Resource) selectedNode;
+    } else if (headObject instanceof Resource) {
+      currentResource = (Resource) headObject;
     }
 
     Project currentProject = currentResource != null ? currentResource.getProject() : null;
 
     if (currentProject != null && !currentProject.equals(lastSelected)) {
       lastSelected = currentProject;
-      final String projectPath = currentProject.getPath();
-      client
-          .getGuide(projectPath)
-          .then(
-              guideDto -> {
-                view.displayGuide(currentProject, guideDto);
-              })
-          .catchError(
-              promiseError -> {
-                view.showStub(constants.guidePanelNothingToShow());
-              });
+      displayGuide(currentProject);
     }
+  }
+
+  public void onRefreshGuideButtonClick() {
+    displayGuide(lastSelected);
+  }
+
+  private void displayGuide(Project project) {
+    client
+        .getGuide(project.getPath())
+        .then(
+            guideDto -> {
+              view.displayGuide(project, guideDto);
+            })
+        .catchError(
+            promiseError -> {
+              view.showStub(constants.guidePanelNothingToShow());
+            });
   }
 
   private void hidePart() {

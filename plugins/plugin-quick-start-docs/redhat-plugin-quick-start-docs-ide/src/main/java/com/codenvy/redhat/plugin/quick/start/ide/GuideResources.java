@@ -32,5 +32,8 @@ public interface GuideResources extends ClientBundle {
 
     @ClassName(("action-button-container"))
     String actionButtonContainer();
+
+    @ClassName(("fullWidthContainer"))
+    String fullWidthContainer();
   }
 }

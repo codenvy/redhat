@@ -20,7 +20,6 @@
     <inherits name='org.eclipse.che.ide.Api'/>
     <inherits name="com.google.gwt.inject.Inject"/>
     <inherits name="org.eclipse.che.ide.Core"/>
-    <inherits name="org.eclipse.che.ide.Core"/>
 
     <source path="ide"/>
     <source path="shared"/>
