@@ -57,7 +57,7 @@ public class QuickStartService extends Service {
     try {
       return dtoFactory.createDtoFromJson(guideContent, GuideDto.class);
     } catch (Exception e) {
-      throw new ServerException("Failed to guide content. Cause: ", e);
+      throw new ServerException("Failed to parse guide content. Cause: ", e);
     }
   }
 
@@ -79,7 +79,7 @@ public class QuickStartService extends Service {
         result.append(line);
       }
     } catch (Exception e) {
-      throw new ServerException("Failed to read guide file", e);
+      throw new ServerException("Failed to read guide file ", e);
     }
     return result.toString();
   }

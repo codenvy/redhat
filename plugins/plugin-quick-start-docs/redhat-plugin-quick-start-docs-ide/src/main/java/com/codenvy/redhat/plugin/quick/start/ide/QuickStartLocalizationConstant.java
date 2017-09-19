@@ -23,4 +23,7 @@ public interface QuickStartLocalizationConstant extends Messages {
 
   @Key("guide.panel.nothing.to.show")
   String guidePanelNothingToShow();
+
+  @Key("guide.panel.refresh.button")
+  String guidePanelRefreshButton();
 }

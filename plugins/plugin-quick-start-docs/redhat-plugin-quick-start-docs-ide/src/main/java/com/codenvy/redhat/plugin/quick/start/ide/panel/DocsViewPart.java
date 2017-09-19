@@ -30,5 +30,7 @@ public interface DocsViewPart extends View<DocsViewPart.ActionDelegate> {
 
   interface ActionDelegate extends BaseActionDelegate {
     void onActionLinkClick(String actionId, Map<String, String> parameters);
+
+    void onRefreshGuideButtonClick();
   }
 }

@@ -30,3 +30,7 @@
     border: 1px;
     display: inline-block;
 }
+
+.fullWidthContainer {
+    width: 100%;
+}
