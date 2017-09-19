@@ -16,11 +16,11 @@
     <parent>
         <artifactId>maven-depmgt-pom</artifactId>
         <groupId>org.eclipse.che.depmgt</groupId>
-        <version>5.18.0-SNAPSHOT</version>
+        <version>5.19.0-SNAPSHOT</version>
     </parent>
     <groupId>com.codenvy.redhat</groupId>
     <artifactId>redhat-parent</artifactId>
-    <version>5.18.0-SNAPSHOT</version>
+    <version>5.19.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>RedHat :: Parent</name>
     <modules>
@@ -37,8 +37,8 @@
         <url>https://github.com/codenvy/redhat</url>
     </scm>
     <properties>
-        <che.version>5.18.0-SNAPSHOT</che.version>
-        <codenvy.version>5.18.0-SNAPSHOT</codenvy.version>
+        <che.version>5.19.0-SNAPSHOT</che.version>
+        <codenvy.version>5.19.0-SNAPSHOT</codenvy.version>
         <site.classifier>onprem-se</site.classifier>
     </properties>
     <dependencyManagement>
