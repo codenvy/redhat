@@ -8,6 +8,11 @@
 # Contributors:
 #   Florent Benoit - Initial Implementation
 
+set -e
+set -u
+
+IMAGE_ALIASES=${IMAGE_ALIASES:-}
+
 skip_update() {
   for i in "$@" ; do
     if [ $i = "--skip-update" ]; then
