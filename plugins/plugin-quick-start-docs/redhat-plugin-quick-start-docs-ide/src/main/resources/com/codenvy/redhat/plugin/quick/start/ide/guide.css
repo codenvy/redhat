@@ -9,8 +9,10 @@
  *   Red Hat, Inc. - initial API and implementation
  */
 
+@external .gwt-DisclosurePanel .content;
+
 .chapter-without-title {
-    padding-left: 25px;
+    padding-left: 24px;
 }
 
 .error-stub {
@@ -33,4 +35,9 @@
 
 .fullWidthContainer {
     width: 100%;
+}
+
+.gwt-DisclosurePanel .content {
+    padding-left: 24px;
+    margin-left: 0px;
 }

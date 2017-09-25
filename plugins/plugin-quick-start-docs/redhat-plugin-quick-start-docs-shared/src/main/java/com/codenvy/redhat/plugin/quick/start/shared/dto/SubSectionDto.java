@@ -10,21 +10,19 @@
  */
 package com.codenvy.redhat.plugin.quick.start.shared.dto;
 
-import java.util.List;
 import org.eclipse.che.dto.shared.DTO;
 
 @DTO
-public interface SectionDto {
+public interface SubSectionDto {
+  String getText();
 
-  String getTitle();
+  void setText(String text);
 
-  void setTitle(String title);
+  SubSectionDto withText(String text);
 
-  SectionDto withTitle(String title);
+  ActionDto getAction();
 
-  List<SubSectionDto> getSubSections();
+  void setAction(ActionDto actionDto);
 
-  void setSubSections(List<SubSectionDto> subSections);
-
-  SectionDto withSubSections(List<SubSectionDto> subSections);
+  SubSectionDto withAction(ActionDto actionDto);
 }
