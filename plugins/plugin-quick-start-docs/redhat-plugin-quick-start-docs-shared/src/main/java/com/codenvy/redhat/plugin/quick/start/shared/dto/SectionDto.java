@@ -22,9 +22,9 @@ public interface SectionDto {
 
   SectionDto withTitle(String title);
 
-  List<SubSectionDto> getSubSections();
+  List<ParagraphDto> getParagraphs();
 
-  void setSubSections(List<SubSectionDto> subSections);
+  void setParagraphs(List<ParagraphDto> paragraphs);
 
-  SectionDto withSubSections(List<SubSectionDto> subSections);
+  SectionDto withParagraphs(List<ParagraphDto> paragraphs);
 }

@@ -13,16 +13,16 @@ package com.codenvy.redhat.plugin.quick.start.shared.dto;
 import org.eclipse.che.dto.shared.DTO;
 
 @DTO
-public interface SubSectionDto {
+public interface ParagraphDto {
   String getText();
 
   void setText(String text);
 
-  SubSectionDto withText(String text);
+  ParagraphDto withText(String text);
 
   ActionDto getAction();
 
   void setAction(ActionDto actionDto);
 
-  SubSectionDto withAction(ActionDto actionDto);
+  ParagraphDto withAction(ActionDto actionDto);
 }
