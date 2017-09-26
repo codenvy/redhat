@@ -10,6 +10,7 @@
  */
 package com.codenvy.redhat.plugin.quick.start.ide.panel;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.eclipse.che.ide.ui.menu.PositionController.HorizontalAlign.MIDDLE;
 import static org.eclipse.che.ide.ui.menu.PositionController.VerticalAlign.BOTTOM;
 
@@ -17,6 +18,7 @@ import com.codenvy.redhat.plugin.quick.start.ide.GuideResources;
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartLocalizationConstant;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.ActionDto;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.GuideDto;
+import com.codenvy.redhat.plugin.quick.start.shared.dto.ParagraphDto;
 import com.codenvy.redhat.plugin.quick.start.shared.dto.SectionDto;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -29,6 +31,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.eclipse.che.ide.FontAwesome;
@@ -81,30 +84,42 @@ public class DocsViewPartImpl extends BaseView<DocsViewPart.ActionDelegate>
   /** Create guide section. */
   private Widget createSection(Project project, SectionDto sectionDto) {
     if (sectionDto.getTitle() == null) {
-      Widget chapter = createChapter(project, sectionDto);
-      chapter.addStyleName(guideResources.getGuideStyle().chapterWithoutTitle());
-      return chapter;
+      Widget paragraphsWidget = createParagraphsWidget(project, sectionDto.getParagraphs());
+      paragraphsWidget.addStyleName(guideResources.getGuideStyle().chapterWithoutTitle());
+      return paragraphsWidget;
     }
 
-    // create chapter with title
+    // create section with title
     DisclosurePanel advancedDisclosure = new DisclosurePanel(sectionDto.getTitle());
     advancedDisclosure.addStyleName(guideResources.getGuideStyle().fullWidthContainer());
-    advancedDisclosure.setContent(createChapter(project, sectionDto));
+    advancedDisclosure.setContent(createParagraphsWidget(project, sectionDto.getParagraphs()));
     return advancedDisclosure;
   }
 
-  private Widget createChapter(Project project, SectionDto sectionDto) {
+  private Widget createParagraphsWidget(Project project, List<ParagraphDto> paragraphs) {
+    VerticalPanel paragraphsWidget = new VerticalPanel();
+    paragraphsWidget.addStyleName(guideResources.getGuideStyle().fullWidthContainer());
+
+    for (ParagraphDto paragraph : paragraphs) {
+      Widget paragraphWidget = createParagraphWidget(project, paragraph);
+      paragraphsWidget.add(paragraphWidget);
+    }
+
+    return paragraphsWidget;
+  }
+
+  private Widget createParagraphWidget(Project project, ParagraphDto paragraphDto) {
     FlowPanel chapterPanel = new FlowPanel();
 
-    if (sectionDto.getText() != null) {
-      Widget safeHtmlWidget = createSafeHtmlWidget(sectionDto.getText());
+    if (!isNullOrEmpty(paragraphDto.getText())) {
+      Widget safeHtmlWidget = createSafeHtmlWidget(paragraphDto.getText());
       chapterPanel.add(safeHtmlWidget);
     }
 
-    if (sectionDto.getAction() != null) {
+    if (paragraphDto.getAction() != null) {
       FlowPanel buttonPanel = new FlowPanel();
       buttonPanel.addStyleName(guideResources.getGuideStyle().actionButtonContainer());
-      Button actionButton = createActionButton(project, sectionDto.getAction());
+      Button actionButton = createActionButton(project, paragraphDto.getAction());
       actionButton.addStyleName(guideResources.getGuideStyle().actionButton());
       buttonPanel.add(actionButton);
       chapterPanel.add(buttonPanel);
