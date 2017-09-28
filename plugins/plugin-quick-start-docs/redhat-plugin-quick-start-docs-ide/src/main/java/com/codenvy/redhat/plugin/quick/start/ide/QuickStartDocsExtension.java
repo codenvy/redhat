@@ -11,6 +11,7 @@
 package com.codenvy.redhat.plugin.quick.start.ide;
 
 import com.codenvy.redhat.plugin.quick.start.ide.action.OpenFileAction;
+import com.codenvy.redhat.plugin.quick.start.ide.action.OpenGuidePanelAction;
 import com.codenvy.redhat.plugin.quick.start.ide.action.RevealResourceAction;
 import com.codenvy.redhat.plugin.quick.start.ide.action.RunCommandAction;
 import com.codenvy.redhat.plugin.quick.start.ide.panel.DocsPartPresenter;
@@ -31,6 +32,7 @@ public class QuickStartDocsExtension {
       final DocsPartPresenter docsPartPresenter,
       GuideResources guideResources,
       OpenFileAction openFileAction,
+      OpenGuidePanelAction openGuidePanelAction,
       RunCommandAction runCommandAction,
       RevealResourceAction revealResourceAction,
       ActionManager actionManager) {
@@ -40,5 +42,6 @@ public class QuickStartDocsExtension {
     actionManager.registerAction("open-file", openFileAction);
     actionManager.registerAction("expand-path", revealResourceAction);
     actionManager.registerAction("run-command", runCommandAction);
+    actionManager.registerAction("open-guide-panel", openGuidePanelAction);
   }
 }
