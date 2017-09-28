@@ -16,7 +16,7 @@
     <parent>
         <artifactId>plugin-parent</artifactId>
         <groupId>com.codenvy.redhat.plugin</groupId>
-        <version>5.18.2</version>
+        <version>5.18.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>plugin-redhat-dashboard</artifactId>

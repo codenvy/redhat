@@ -16,7 +16,7 @@
     <parent>
         <artifactId>redhat-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
-        <version>5.18.2</version>
+        <version>5.18.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>com.codenvy.redhat.plugin</groupId>
