@@ -72,7 +72,6 @@ public class DocsPartPresenter extends BasePresenter
           @Override
           public void onWsAgentStarted(WsAgentStateEvent wsAgentStateEvent) {
             addPart();
-            workspaceAgent.openPart(DocsPartPresenter.this, TOOLING);
           }
 
           @Override
@@ -113,9 +112,8 @@ public class DocsPartPresenter extends BasePresenter
 
     Resource currentResource = null;
 
-    if (selection == null
-        || selection.getHeadElement() == null
-        || selection.getAllElements().size() > 1) {
+    if (selection == null || selection.getHeadElement() == null) {
+      view.showStub(constants.guidePanelNothingToShow());
       return;
     }
 
