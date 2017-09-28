@@ -12,7 +12,6 @@ package com.codenvy.redhat.plugin.quick.start.ide.inject;
 
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartServiceClient;
 import com.codenvy.redhat.plugin.quick.start.ide.QuickStartServiceClientImpl;
-import com.codenvy.redhat.plugin.quick.start.ide.panel.DocsPartPresenter;
 import com.codenvy.redhat.plugin.quick.start.ide.panel.DocsViewPart;
 import com.codenvy.redhat.plugin.quick.start.ide.panel.DocsViewPartImpl;
 import com.google.gwt.inject.client.AbstractGinModule;
@@ -25,6 +24,5 @@ public class QuickStartGinModule extends AbstractGinModule {
   protected void configure() {
     bind(DocsViewPart.class).to(DocsViewPartImpl.class);
     bind(QuickStartServiceClient.class).to(QuickStartServiceClientImpl.class);
-    bind(DocsPartPresenter.class);
   }
 }
