@@ -16,11 +16,11 @@
     <parent>
         <artifactId>redhat-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
-        <version>5.18.3-SNAPSHOT</version>
+        <version>5.18.3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>site</artifactId>
-    <version>5.18.3-SNAPSHOT</version>
+    <version>5.18.3</version>
     <packaging>pom</packaging>
     <name>RedHat :: Website</name>
     <build>
