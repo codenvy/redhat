@@ -9,7 +9,10 @@ function getUrlParameter(name) {
 var getUrl = window.location;
 var baseUrl = getUrl.protocol + "//" + getUrl.host;
 
-if (window.location.href.indexOf(baseUrl + "/site/login") === 0 && document.referrer.indexOf(baseUrl + "/dashboard") !== 0) {
+// prevents auto login after logout procedure
+if (window.location.href.indexOf(baseUrl + "/site/login") === 0
+    && document.referrer.indexOf(baseUrl + "/dashboard") !== 0) {
+
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
