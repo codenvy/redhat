@@ -16,7 +16,7 @@
     <parent>
         <artifactId>che-core-ide-parent</artifactId>
         <groupId>com.codenvy.redhat</groupId>
-        <version>5.18.3</version>
+        <version>5.18.4-SNAPSHOT</version>
     </parent>
     <artifactId>che-core-ide-stacks</artifactId>
     <packaging>pom</packaging>
