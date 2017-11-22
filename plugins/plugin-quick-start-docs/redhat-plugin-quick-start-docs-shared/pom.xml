@@ -16,7 +16,7 @@
     <parent>
         <artifactId>plugin-quick-start-docs-parent</artifactId>
         <groupId>com.codenvy.redhat.plugin</groupId>
-        <version>5.21.0-SNAPSHOT</version>
+        <version>5.21.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>redhat-plugin-quick-start-docs-shared</artifactId>
