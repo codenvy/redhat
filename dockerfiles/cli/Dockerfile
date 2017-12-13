@@ -15,7 +15,7 @@
 # use:
 #    docker run -v $(pwd):/codenvy codenvy/cli-redhat [command]
 
-FROM codenvy/cli:nightly
+FROM codenvy/cli:5.22.0
 RUN rm -rf /version && mkdir /scripts/codenvy
 COPY scripts /scripts/
 COPY version /version/
